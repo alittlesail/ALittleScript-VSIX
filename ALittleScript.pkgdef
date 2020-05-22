@@ -1,0 +1,39 @@
+﻿; Associate icons with file extensions in Solution Explorer
+; Find more icons at http://glyphlist.azurewebsites.net/knownmonikers/
+[$RootKey$\ShellFileAssociations\.alittle]
+"DefaultIconMoniker"="708db313-cc96-4a3b-be6f-2f706bc6017a:0"
+
+; The following line will schedule the package to be initialized when a solution is being opened
+[$RootKey$\InstalledProducts\VSPackage]
+@="ALittleScript"
+"PID"="1.0"
+"ProductDetails"="Alittle Script"
+
+; package load
+[$RootKey$\Packages\{e19f888c-0000-4f12-8c71-bce3590d3421}]
+@="ALittleScriptPackage"
+"InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
+"Class"="ALittle.ALittleScriptPackage"
+"CodeBase"="$PackageFolder$\ALittleScript.dll"
+"AllowsBackgroundLoad"=dword:00000001
+
+; d2567162-f94f-4091-8798-a096e61b8b50 is VSConstants.UICONTEXT.SolutionOpening_string
+[$RootKey$\AutoLoadPackages\{d2567162-f94f-4091-8798-a096e61b8b50}]
+"{e19f888c-0000-4f12-8c71-bce3590d3421}"=dword:00000002
+
+[$RootKey$\Menus]
+"{e19f888c-0000-4f12-8c71-bce3590d3421}"=", Menus.ctmenu, 1"
+
+[$RootKey$\ToolsOptionsPages\ALittleScript]
+@="#0"
+"Package"="{e19f888c-0000-4f12-8c71-bce3590d3421}"
+[$RootKey$\ToolsOptionsPages\ALittleScript\General]
+@="#0"
+"Package"="{e19f888c-0000-4f12-8c71-bce3590d3421}"
+"Page"="{a154cbb1-0000-39e9-b003-d08dff44e43f}"
+[$RootKey$\AutomationProperties\ALittleScript]
+"Package"="{e19f888c-0000-4f12-8c71-bce3590d3421}"
+[$RootKey$\AutomationProperties\ALittleScript\General]
+"Package"="{e19f888c-0000-4f12-8c71-bce3590d3421}"
+[$RootKey$\AutomationProperties\ALittleScript\General]
+"Name"="ALittleScript.General"

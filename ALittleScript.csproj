@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props" Condition="'$(VisualStudioVersion)' == '14.0' And Exists('packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props')" />
+  <Import Project="packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.props" Condition="'$(VisualStudioVersion)' == '15.0' And Exists('packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>$(VisualStudioVersion)</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20305</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{7365C485-4B91-4A75-947C-695A17D4F98C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <VsixType>v3</VsixType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ALittle</RootNamespace>
+    <AssemblyName>ALittleScript</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.ComponentModelHost.16.4.280\lib\net472\Microsoft.VisualStudio.ComponentModelHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.CoreUtility.14.3.25407\lib\net45\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Editor, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Editor.14.3.25407\lib\net45\Microsoft.VisualStudio.Editor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Imaging.14.3.25407\lib\net45\Microsoft.VisualStudio.Imaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Language.Intellisense.14.3.25407\lib\net45\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6071\lib\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.14.0.14.3.25407\lib\Microsoft.VisualStudio.Shell.14.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.Immutable.10.0.10.0.30319\lib\net40\Microsoft.VisualStudio.Shell.Immutable.10.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.Immutable.14.0.14.3.25407\lib\net45\Microsoft.VisualStudio.Shell.Immutable.14.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.7.10.6072\lib\net11\Microsoft.VisualStudio.Shell.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.10.0.10.0.30320\lib\net20\Microsoft.VisualStudio.Shell.Interop.10.0.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50728\lib\net11\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Text.Data.14.3.25407\lib\net45\Microsoft.VisualStudio.Text.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Text.Logic.14.3.25407\lib\net45\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Text.UI.14.3.25407\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Text.UI.Wpf.14.3.25407\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6071\lib\net11\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50728\lib\net11\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Threading.14.1.111\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Utilities, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Utilities.14.3.25407\lib\net45\Microsoft.VisualStudio.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\stdole.7.0.3302\lib\net10\stdole.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ALittleScriptPackage.cs" />
+    <Compile Include="Command\JumpTargetLanguageFileCommand.cs" />
+    <Compile Include="Format\ALittleScriptClassificationFormat.cs" />
+    <Compile Include="Format\ALittleScriptClassificationType.cs" />
+    <Compile Include="Generate\ALittleScriptAccessModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptAllExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptAllTypeConstElement.cs" />
+    <Compile Include="Generate\ALittleScriptAllTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptAssertExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptAttributeModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptBindStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptBlockCommentElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassCtorDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassElementDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassExtendsDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassGetterDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassMethodDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassSetterDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassStaticDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassVarDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassVarNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptCommandBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptCommandModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptConstModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptConstValueElement.cs" />
+    <Compile Include="Generate\ALittleScriptCoroutineModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptCoroutineStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptCustomTypeDotIdElement.cs" />
+    <Compile Include="Generate\ALittleScriptCustomTypeDotIdNameElement.cs" />
+    <Compile Include="Generate\ALittleScriptCustomTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptCustomTypeNameElement.cs" />
+    <Compile Include="Generate\ALittleScriptCustomTypeTemplateElement.cs" />
+    <Compile Include="Generate\ALittleScriptDoWhileBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptDoWhileConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptDoWhileExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptElseBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptElseExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptElseIfBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptElseIfConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptElseIfExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptEmptyExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptEnumBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptEnumDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptEnumNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptEnumVarDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptEnumVarNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptFactory.cs" />
+    <Compile Include="Generate\ALittleScriptFlowExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptForBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptForConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptForEndStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptForExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptForInConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptForPairDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptForStartStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptForStepConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptForStepStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorParamOneTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorParamTailElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorParamTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorReturnOneTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorReturnTailElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorReturnTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericFunctorTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericListTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericMapTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGenericTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptGlobalMethodDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptIdElement.cs" />
+    <Compile Include="Generate\ALittleScriptIfBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptIfConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptIfExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptInstanceDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptKeyElement.cs" />
+    <Compile Include="Generate\ALittleScriptLanguageBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptLanguageModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptLanguageNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptLineCommentElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodGetterParamDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodParamDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodParamNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodParamOneDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodParamTailDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodReturnDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodReturnOneDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodReturnTailDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptMethodSetterParamDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptNamespaceDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptNamespaceElementDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptNamespaceNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptNativeModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptNullableModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptNumberElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp1Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp1ExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp2Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp2StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp2SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp2ValueElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp3Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp3StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp3SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp3SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp4Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp4StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp4SuffixEeElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp4SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp4SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp5Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp5StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp5SuffixEeElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp5SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp5SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp6Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp6StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp6SuffixEeElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp6SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp6SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp7Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp7StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp7SuffixEeElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp7SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp7SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp8Element.cs" />
+    <Compile Include="Generate\ALittleScriptOp8StatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp8SuffixEeElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp8SuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptOp8SuffixExElement.cs" />
+    <Compile Include="Generate\ALittleScriptOpAssignElement.cs" />
+    <Compile Include="Generate\ALittleScriptOpAssignExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptOpNewListStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptOpNewStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptPrimitiveTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueBracketValueElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueCastTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueCustomTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueDotIdElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueDotIdNameElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueFirstTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueMethodCallElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueMethodTemplateElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueSuffixElement.cs" />
+    <Compile Include="Generate\ALittleScriptPropertyValueThisTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptProtocolModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptReflectCustomTypeElement.cs" />
+    <Compile Include="Generate\ALittleScriptReflectValueElement.cs" />
+    <Compile Include="Generate\ALittleScriptReflectValueStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptRegexElement.cs" />
+    <Compile Include="Generate\ALittleScriptRegisterModifierElement.cs" />
+    <Compile Include="Generate\ALittleScriptReturnExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptReturnYieldElement.cs" />
+    <Compile Include="Generate\ALittleScriptRootElement.cs" />
+    <Compile Include="Generate\ALittleScriptStringElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructBodyDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructExtendsDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructOptionDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructOptionNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructVarDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptStructVarNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTcallStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateExtendsClassDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateExtendsDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateExtendsStructDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplatePairDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptTextElement.cs" />
+    <Compile Include="Generate\ALittleScriptThrowExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptUsingDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptUsingNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptValueFactorStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptValueOpStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptValueStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptVarAssignDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptVarAssignExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptVarAssignNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptWhileBodyElement.cs" />
+    <Compile Include="Generate\ALittleScriptWhileConditionElement.cs" />
+    <Compile Include="Generate\ALittleScriptWhileExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptWrapExprElement.cs" />
+    <Compile Include="Generate\ALittleScriptWrapValueStatElement.cs" />
+    <Compile Include="Guess\ALittleScriptGuess.cs" />
+    <Compile Include="Guess\ALittleScriptGuessTemplate.cs" />
+    <Compile Include="Guess\ALittleScriptGuessMethodTemplate.cs" />
+    <Compile Include="Guess\ALittleScriptGuessStructName.cs" />
+    <Compile Include="Guess\ALittleScriptGuessStruct.cs" />
+    <Compile Include="Guess\ALittleScriptGuessPrimitive.cs" />
+    <Compile Include="Guess\ALittleScriptGuessReturnTail.cs" />
+    <Compile Include="Guess\ALittleScriptGuessParamTail.cs" />
+    <Compile Include="Guess\ALittleScriptGuessNamespaceName.cs" />
+    <Compile Include="Guess\ALittleScriptGuessNamespace.cs" />
+    <Compile Include="Guess\ALittleScriptGuessMap.cs" />
+    <Compile Include="Guess\ALittleScriptGuessList.cs" />
+    <Compile Include="Guess\ALittleScriptGuessFunctor.cs" />
+    <Compile Include="Guess\ALittleScriptGuessEnumName.cs" />
+    <Compile Include="Guess\ALittleScriptGuessEnum.cs" />
+    <Compile Include="Guess\ALittleScriptGuessConst.cs" />
+    <Compile Include="Guess\ALittleScriptGuessClassTemplate.cs" />
+    <Compile Include="Guess\ALittleScriptGuessClassName.cs" />
+    <Compile Include="Guess\ALittleScriptGuessClass.cs" />
+    <Compile Include="Index\ALittleScriptIndex.cs" />
+    <Compile Include="Index\ALittleScriptStructData.cs" />
+    <Compile Include="Index\ALittleScriptEnumData.cs" />
+    <Compile Include="Index\ALittleScriptClassData.cs" />
+    <Compile Include="Index\ALittleScriptAccessData.cs" />
+    <Compile Include="Main\ALittleScriptOp.cs" />
+    <Compile Include="Main\ALittleScriptUtility.cs" />
+    <Compile Include="Main\ALittleScriptProjectInfo.cs" />
+    <Compile Include="Main\ALittleScriptFile.cs" />
+    <Compile Include="Main\ALittleScriptExport.cs" />
+    <Compile Include="Options\DialogPageProvider.cs" />
+    <Compile Include="Options\GeneralOptions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reference\ALittleScriptClassExtendsDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptCoroutineStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptAllExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptNumberReference.cs" />
+    <Compile Include="Reference\ALittleScriptLanguageModifierReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassStaticDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassMethodDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassSetterDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassGetterDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptLanguageNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptElseIfConditionReference.cs" />
+    <Compile Include="Reference\ALittleScriptDoWhileConditionReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassElementDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodParamOneDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodReturnDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptNamespaceElementDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptFlowExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptWhileConditionReference.cs" />
+    <Compile Include="Reference\ALittleScriptIfConditionReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassCtorDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptBindStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptAssertExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptAllTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassVarDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptCustomTypeCommonReference.cs" />
+    <Compile Include="Reference\ALittleScriptConstValueReference.cs" />
+    <Compile Include="Reference\ALittleScriptCustomTypeDotIdReference.cs" />
+    <Compile Include="Reference\ALittleScriptCustomTypeDotIdNameReference.cs" />
+    <Compile Include="Reference\ALittleScriptCustomTypeNameReference.cs" />
+    <Compile Include="Reference\ALittleScriptEnumDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptEnumVarDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodBodyDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptGlobalMethodDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptGenericTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptForPairDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptForExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodReturnTailDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodParamTailDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptNamespaceDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptReturnExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptReflectValueReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueThisTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueSuffixReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueMethodCallReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueFirstTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueDotIdReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueDotIdNameReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueCustomTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueCastTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptPropertyValueBracketValueReference.cs" />
+    <Compile Include="Reference\ALittleScriptPrimitiveTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptOpNewStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptOpNewListStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptOpAssignExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptStructDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptStructVarDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptIdReference.cs" />
+    <Compile Include="Reference\ALittleScriptStructOptionNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptThrowExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptTcallStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptTemplateDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptTemplatePairDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptUsingDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptValueStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptValueFactorStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptUsingNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptTextReference.cs" />
+    <Compile Include="Reference\ALittleScriptTemplateNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptEnumVarNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptVarAssignDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptOp1ExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptVarAssignExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptStringReference.cs" />
+    <Compile Include="Reference\ALittleScriptWrapValueStatReference.cs" />
+    <Compile Include="Reference\ALittleScriptVarAssignNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptStructVarNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptEnumNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptStructNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptCustomTypeReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodParamNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptClassVarNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptNamespaceNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptFactoryClass.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reference\ALittleScriptClassNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptMethodNameDecReference.cs" />
+    <Compile Include="Reference\ALittleScriptKeyReference.cs" />
+    <Compile Include="Reference\ALittleScriptBlockCommentReference.cs" />
+    <Compile Include="Reference\ALittleScriptLineCommentReference.cs" />
+    <Compile Include="Translation\ALittleScriptTranslationJavaScript.cs" />
+    <Compile Include="Translation\ALittleScriptTranslation.cs" />
+    <Compile Include="Translation\ALittleScriptTranslationLua.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Command.png" />
+    <Resource Include="Icon\file_icon.png" />
+    <VSCTCompile Include="ALittleScriptPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <Content Include="Icon\Monikers.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\ALittleScript.abnf" />
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ALanguage\ALanguage.csproj">
+      <Project>{720498de-e807-4276-b4d8-76a9db753633}</Project>
+      <Name>ALanguage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ALittleScript.pkgdef">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\ALittleScriptEnumIcon.ico" />
+    <Content Include="Resources\ALittleScriptFieldIcon.ico" />
+    <Content Include="Resources\ALittleScriptClassIcon.ico" />
+    <Content Include="Resources\ALittleScriptFile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\ALittleScriptInstanceIcon.ico" />
+    <Content Include="Resources\ALittleScriptMethodIcon.ico" />
+    <Content Include="Resources\ALittleScriptNamespaceIcon.ico" />
+    <Content Include="Resources\ALittleScriptParamIcon.ico" />
+    <Content Include="Resources\ALittleScriptPropertyIcon.ico" />
+    <Content Include="Resources\ALittleScriptStaticIcon.ico" />
+    <Content Include="Resources\ALittleScriptStructIcon.ico" />
+    <Content Include="Resources\ALittleScriptTemplateIcon.ico" />
+    <Content Include="Resources\ALittleScriptVariableIcon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="'$(VisualStudioVersion)' == '15.0' And !Exists('packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.props'))" />
+    <Error Condition="'$(VisualStudioVersion)' == '15.0' And !Exists('packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.14.1.7\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.14.1.7\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets'))" />
+    <Error Condition="'$(VisualStudioVersion)' == '14.0' And !Exists('packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props'))" />
+    <Error Condition="'$(VisualStudioVersion)' == '14.0' And !Exists('packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets'))" />
+  </Target>
+  <Import Project="packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.targets" Condition="'$(VisualStudioVersion)' == '15.0' And Exists('packages\Microsoft.VSSDK.BuildTools.15.0.26201\build\Microsoft.VSSDK.BuildTools.targets')" />
+  <Import Project="packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.14.1.7\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets" Condition="Exists('packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.14.1.7\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" />
+  <Import Project="packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets" Condition="'$(VisualStudioVersion)' == '14.0' And Exists('packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets')" />
+</Project>
