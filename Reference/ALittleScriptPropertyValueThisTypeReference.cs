@@ -71,13 +71,6 @@ namespace ALittle
             return dec_list;
         }
 
-        public override ABnfElement GotoDefinition()
-        {
-            var result_list = CalcResolve();
-            foreach (var result in result_list) return result;
-            return null;
-        }
-
         public override ABnfGuessError GuessTypes(out List<ABnfGuess> guess_list)
         {
             guess_list = new List<ABnfGuess>();

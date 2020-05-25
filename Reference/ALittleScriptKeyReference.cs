@@ -25,6 +25,11 @@ namespace ALittle
             if (parent == null) return null;
             return parent.GetReference().GotoDefinition();
         }
+
+        public override bool CanGotoDefinition()
+        {
+            return false;
+        }
     }
 }
 
