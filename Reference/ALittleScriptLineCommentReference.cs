@@ -15,6 +15,11 @@ namespace ALittle
             blur = false;
             return "ALittleScriptComment";
         }
+
+        public override bool CanGotoDefinition()
+        {
+            return false;
+        }
     }
 }
 

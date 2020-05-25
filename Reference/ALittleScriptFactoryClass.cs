@@ -105,6 +105,7 @@ namespace ALittle
             m_create_map[typeof(ALittleScriptLanguageNameDecElement)] = (element) => { return new ALittleScriptLanguageNameDecReference(element); };
 
             m_create_map[typeof(ALittleScriptStringElement)] = (element) => { return new ALittleScriptStringReference(element); };
+            m_create_map[typeof(ALittleScriptRegexElement)] = (element) => { return new ALittleScriptRegexReference(element); };
             m_create_map[typeof(ALittleScriptTextElement)] = (element) => { return new ALittleScriptTextReference(element); };
             m_create_map[typeof(ALittleScriptNumberElement)] = (element) => { return new ALittleScriptNumberReference(element); };
             m_create_map[typeof(ALittleScriptBlockCommentElement)] = (element) => { return new ALittleScriptBlockCommentReference(element); };

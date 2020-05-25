@@ -416,6 +416,7 @@
     <Compile Include="Reference\ALittleScriptMethodReturnDecReference.cs" />
     <Compile Include="Reference\ALittleScriptNamespaceElementDecReference.cs" />
     <Compile Include="Reference\ALittleScriptFlowExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptRegexReference.cs" />
     <Compile Include="Reference\ALittleScriptWhileConditionReference.cs" />
     <Compile Include="Reference\ALittleScriptIfConditionReference.cs" />
     <Compile Include="Reference\ALittleScriptClassDecReference.cs" />
