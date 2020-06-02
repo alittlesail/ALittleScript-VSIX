@@ -7,6 +7,7 @@ namespace ALittle
 {
     public class ALittleScriptUtility
     {
+        // 删除文件夹，以及子文件和子文件夹
         public static void DeleteDirectory(DirectoryInfo info)
         {
             if (!info.Exists) return;

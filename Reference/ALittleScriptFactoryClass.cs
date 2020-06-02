@@ -207,7 +207,7 @@ namespace ALittle
             {
                 if (guess == null)
                 {
-                    error = new ABnfGuessError(element, "guess列表出现nul:" + element);
+                    error = new ABnfGuessError(element, "guess列表出现null:" + element);
                     ALittleScriptIndex.inst.AddGuessError(element, error);
                     return error;
                 }

@@ -37,6 +37,7 @@ namespace ALittle
             else if (dec is ALittleScriptClassElementDecElement)
             {
                 var element_dec = dec as ALittleScriptClassElementDecElement;
+                access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                 // 处理成员变量
                 if (element_dec.GetClassVarDec() != null)
                 {
@@ -44,7 +45,6 @@ namespace ALittle
                     var name_dec = var_dec.GetClassVarNameDec();
                     if (name_dec == null) return;
                     name = name_dec.GetElementText();
-                    access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                     attr_type = ALittleScriptUtility.ClassAttrType.VAR;
                     dec = element_dec.GetClassVarDec();
                 }
@@ -56,7 +56,6 @@ namespace ALittle
                     if (name_dec == null) return;
                     dec = name_dec;
                     name = name_dec.GetElementText();
-                    access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                     attr_type = ALittleScriptUtility.ClassAttrType.FUN;
                 }
                 // 处理getter函数
@@ -67,7 +66,6 @@ namespace ALittle
                     if (name_dec == null) return;
                     dec = name_dec;
                     name = name_dec.GetElementText();
-                    access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                     attr_type = ALittleScriptUtility.ClassAttrType.GETTER;
                 }
                 // 处理setter函数
@@ -78,7 +76,6 @@ namespace ALittle
                     if (name_dec == null) return;
                     dec = name_dec;
                     name = name_dec.GetElementText();
-                    access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                     attr_type = ALittleScriptUtility.ClassAttrType.SETTER;
                 }
                 // 处理静态函数
@@ -89,7 +86,6 @@ namespace ALittle
                     if (name_dec == null) return;
                     dec = name_dec;
                     name = name_dec.GetElementText();
-                    access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
                     attr_type = ALittleScriptUtility.ClassAttrType.STATIC;
                 }
                 else
