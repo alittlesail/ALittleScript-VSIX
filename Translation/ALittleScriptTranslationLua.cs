@@ -2545,9 +2545,54 @@ namespace ALittle
             var class_body_dec = root.GetClassBodyDec();
             if (class_body_dec == null) return new ABnfGuessError(null, "表达式不完整");
 
-            int ctor_count = 0;
-
             var class_element_list = class_body_dec.GetClassElementDecList();
+
+            // 获取所有成员变量初始化
+            var var_init = "";
+            bool has_ctor = false;
+            foreach (var class_element_dec in class_element_list)
+            {
+                if (class_element_dec.GetClassCtorDec() != null)
+				{
+                    has_ctor = true;
+                    continue;
+                }
+
+                var var_dec = class_element_dec.GetClassVarDec();
+                if (var_dec == null) continue;
+
+                var var_name_dec = var_dec.GetClassVarNameDec();
+                if (var_name_dec == null) continue;
+                var var_name = var_name_dec.GetElementText();
+
+                var var_value_dec = var_dec.GetClassVarValueDec();
+                if (var_value_dec == null) continue;
+				{
+                    if (var_value_dec.GetConstValue() != null)
+					{
+                        var error = GenerateConstValue(var_value_dec.GetConstValue(), out var var_value_content);
+                        if (error != null) return null;
+                        var_init += pre_tab + "\t" + "___rawset(self, \"" + var_name + "\", " + var_value_content + ")\n";
+                    }
+                    else if (var_value_dec.GetOpNewStat() != null)
+                    {
+                        var error = GenerateOpNewStat(var_value_dec.GetOpNewStat(), out var op_new_stat_content);
+                        if (error != null) return null;
+                        var_init += pre_tab + "\t" + "___rawset(self, \"" + var_name + "\", " + op_new_stat_content + ")\n";
+                    }
+                }
+			}
+
+            // 如果没有ctor，并且有初始化函数
+            if (!has_ctor && var_init.Length > 0)
+			{
+                content += pre_tab + "function " + class_name + ":Ctor()\n";
+                content += var_init;
+                content += pre_tab + "end\n";
+                content += "\n";
+            }
+
+            int ctor_count = 0;
             foreach (var class_element_dec in class_element_list)
             {
                 if (!ALittleScriptUtility.IsLanguageEnable(class_element_dec.GetModifierList()))
@@ -2583,6 +2628,14 @@ namespace ALittle
 
                     var body_dec = ctor_dec.GetMethodBodyDec();
                     var all_expr_content = "";
+
+                    // 初始化成员变量
+                    if (var_init.Length > 0)
+                    {
+                        all_expr_content += var_init;
+                        var_init = "";
+                    }
+
                     if (body_dec != null)
                     {
                         var all_expr_list = body_dec.GetAllExprList();

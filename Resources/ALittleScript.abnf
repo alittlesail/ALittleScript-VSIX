@@ -69,7 +69,8 @@ ClassNameDec = Id#;
 ClassExtendsDec = ':'@ (NamespaceNameDec '.')? ClassNameDec;
 ClassElementDec = Modifier* (ClassCtorDec | ClassGetterDec | ClassSetterDec | ClassStaticDec | ClassMethodDec | ClassVarDec);
 ClassBodyDec = '{'@ ClassElementDec* '}';
-ClassVarDec = AllType@ ClassVarNameDec ';';
+ClassVarValueDec = '='@ (ConstValue | OpNewStat);
+ClassVarDec = AllType@ ClassVarNameDec ClassVarValueDec? ';';
 ClassVarNameDec = Id;
 
 // 结构体定义

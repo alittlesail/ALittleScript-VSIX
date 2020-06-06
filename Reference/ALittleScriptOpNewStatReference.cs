@@ -29,6 +29,8 @@ namespace ALittle
             {
                 if (value_stat_list.Count > 0)
                     return new ABnfGuessError(m_element, "创建容器实例对象不能有参数");
+                if (m_element.GetGenericType().GetGenericFunctorType() != null)
+                    return new ABnfGuessError(m_element, "Functor不能new");
                 return null;
             }
 

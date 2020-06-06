@@ -47,6 +47,22 @@ namespace ALittle
             }
             return m_cache_ClassVarNameDec;
         }
+        private bool m_flag_ClassVarValueDec = false;
+        private ALittleScriptClassVarValueDecElement m_cache_ClassVarValueDec = null;
+        public ALittleScriptClassVarValueDecElement GetClassVarValueDec()
+        {
+            if (m_flag_ClassVarValueDec) return m_cache_ClassVarValueDec;
+            m_flag_ClassVarValueDec = true;
+            foreach (var child in m_childs)
+            {
+                if (child is ALittleScriptClassVarValueDecElement)
+                {
+                    m_cache_ClassVarValueDec = child as ALittleScriptClassVarValueDecElement;
+                    break;
+                }
+            }
+            return m_cache_ClassVarValueDec;
+        }
         private bool m_flag_String = false;
         private ALittleScriptStringElement m_cache_String = null;
         public ALittleScriptStringElement GetString()

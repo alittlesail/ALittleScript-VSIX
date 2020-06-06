@@ -48,6 +48,7 @@ namespace ALittle
             m_create_map["ClassExtendsDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassExtendsDecElement(factory, file, line, col, offset, type); };
             m_create_map["ClassElementDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassElementDecElement(factory, file, line, col, offset, type); };
             m_create_map["ClassBodyDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassBodyDecElement(factory, file, line, col, offset, type); };
+            m_create_map["ClassVarValueDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassVarValueDecElement(factory, file, line, col, offset, type); };
             m_create_map["ClassVarDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassVarDecElement(factory, file, line, col, offset, type); };
             m_create_map["ClassVarNameDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptClassVarNameDecElement(factory, file, line, col, offset, type); };
             m_create_map["StructDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptStructDecElement(factory, file, line, col, offset, type); };

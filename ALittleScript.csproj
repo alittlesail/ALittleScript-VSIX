@@ -197,6 +197,7 @@
     <Compile Include="Generate\ALittleScriptClassStaticDecElement.cs" />
     <Compile Include="Generate\ALittleScriptClassVarDecElement.cs" />
     <Compile Include="Generate\ALittleScriptClassVarNameDecElement.cs" />
+    <Compile Include="Generate\ALittleScriptClassVarValueDecElement.cs" />
     <Compile Include="Generate\ALittleScriptCommandBodyDecElement.cs" />
     <Compile Include="Generate\ALittleScriptCommandModifierElement.cs" />
     <Compile Include="Generate\ALittleScriptConstModifierElement.cs" />
