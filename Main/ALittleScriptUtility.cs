@@ -96,7 +96,7 @@ namespace ALittle
                         var modifier = language.GetReference() as ALittleScriptLanguageModifierReference;
                         if (modifier == null) return false;
 
-                        return modifier.IsLanguageEnanle();
+                        return modifier.IsLanguageEnable();
                     }
                 }
             }

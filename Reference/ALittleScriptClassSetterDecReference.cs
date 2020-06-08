@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace ALittle
 {
-    public class ALittleScriptClassGetterDecReference : ALittleScriptReferenceTemplate<ALittleScriptClassGetterDecElement>
+    public class ALittleScriptClassSetterDecReference : ALittleScriptReferenceTemplate<ALittleScriptClassSetterDecElement>
     {
-        public ALittleScriptClassGetterDecReference(ABnfElement element) : base(element) { }
+        public ALittleScriptClassSetterDecReference(ABnfElement element) : base(element) { }
 
         public override ABnfGuessError CheckError()
         {

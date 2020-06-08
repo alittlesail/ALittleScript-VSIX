@@ -69,7 +69,7 @@ namespace ALittle
                     if (error != null) return error;
 
                     if (!(guess is ALittleScriptGuessList) && !(guess is ALittleScriptGuessMap))
-                        return new ABnfGuessError(error.GetElement(), "成员变量初始化只能赋值List或者Map或者常量");
+                        return new ABnfGuessError(op_new_stat, "成员变量初始化只能赋值List或者Map或者常量");
 
                     error = ALittleScriptOp.GuessTypeEqual(guess_list[0], op_new_stat, guess, true, false);
                     if (error != null)
@@ -78,6 +78,7 @@ namespace ALittle
 			}
 
             return null;
+
         }
     }
 }

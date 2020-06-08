@@ -21,7 +21,7 @@ namespace ALittle
             return null;
         }
 
-        public bool IsLanguageEnanle()
+        public bool IsLanguageEnable()
         {
             if (m_name_set == null)
             {

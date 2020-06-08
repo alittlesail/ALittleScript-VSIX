@@ -50,7 +50,7 @@ namespace ALittle
                     }
                     else if (else_if_body != null)
                     {
-                        var error = CheckAllExprList(return_list, if_body.GetAllExprList(), out bool sub_result);
+                        var error = CheckAllExprList(return_list, else_if_body.GetAllExprList(), out bool sub_result);
                         if (error != null) return error;
                         if (!sub_result) return null;
                     }

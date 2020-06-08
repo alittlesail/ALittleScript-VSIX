@@ -34,6 +34,8 @@ namespace ALittle
             // 如果返回值只有一个函数调用
             if (property_value_list.Count > 1)
             {
+                if (value_stat == null)
+                    return new ABnfGuessError(m_element, "调用的函数没有返回值");
                 // 获取右边表达式的
                 var guess_error = value_stat.GuessTypes(out List<ABnfGuess> method_call_guess_list);
                 if (guess_error != null) return guess_error;

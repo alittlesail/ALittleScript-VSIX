@@ -3034,7 +3034,7 @@ namespace ALittle
             {
                 if (param_dec == null) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，必须有两个参数");
                 var one_dec_list = param_dec.GetMethodParamOneDecList();
-                if (one_dec_list.Count != 2) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，必须有两个参数");
+                if (one_dec_list.Count != 2 || one_dec_list[1].GetAllType() == null) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，必须有两个参数");
                 
                 var error = one_dec_list[1].GetAllType().GuessType(out ABnfGuess guess_param);
                 if (error != null) return error;
