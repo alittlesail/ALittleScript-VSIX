@@ -3663,11 +3663,14 @@ namespace ALittle
             if (m_need_all_struct) content += "let ___all_struct = ALittle.GetAllStruct();\n";
             content += "\n";
 
-            foreach (var pair in m_reflect_map)
-            {
-                if (!pair.Value.generate) continue;
+            var info_list = new List<StructReflectInfo>();
+            foreach (var pair in m_reflect_map) info_list.Add(pair.Value);
+            info_list.Sort(StructReflectSort);
 
-                content += "ALittle.RegStruct(" + pair.Value.hash_code + ", \"" + pair.Key + "\", " + pair.Value.content + ")\n";
+            foreach (var info in info_list)
+            {
+                if (!info.generate) continue;
+                content += "ALittle.RegStruct(" + info.hash_code + ", \"" + info.name + "\", " + info.content + ")\n";
             }
             content += "\n";
 

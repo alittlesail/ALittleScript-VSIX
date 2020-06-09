@@ -3222,12 +3222,14 @@ namespace ALittle
                 content += "local ___all_struct = " + m_alittle_gen_namespace_pre + "GetAllStruct()\n";
             content += "\n";
 
-            foreach (var pair in m_reflect_map)
+            var info_list = new List<StructReflectInfo>();
+            foreach (var pair in m_reflect_map) info_list.Add(pair.Value);
+            info_list.Sort(StructReflectSort);
+            foreach (var info in info_list)
             {
-                if (!pair.Value.generate) continue;
-
+                if (!info.generate) continue;
                 content += m_alittle_gen_namespace_pre
-                    + "RegStruct(" + pair.Value.hash_code + ", \"" + pair.Key + "\", " + pair.Value.content + ")\n";
+                    + "RegStruct(" + info.hash_code + ", \"" + info.name + "\", " + info.content + ")\n";
             }
             content += "\n";
 
