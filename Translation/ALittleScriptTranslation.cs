@@ -137,7 +137,7 @@ namespace ALittle
             error = GenerateRoot(namespace_dec.GetNamespaceElementDecList(), out string content);
             if (error != null) return error;
 
-            File.WriteAllText(full_path, content);
+            File.WriteAllText(full_path, content, System.Text.Encoding.UTF8);
             return null;
         }
 
