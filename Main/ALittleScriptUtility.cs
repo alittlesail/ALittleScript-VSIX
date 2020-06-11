@@ -125,7 +125,11 @@ namespace ALittle
             ABnfElement parent = element;
             while (parent != null)
             {
-                if (parent is ALittleScriptNamespaceDecElement)
+                if (parent is ALittleScriptPropertyValueElement)
+				{
+                    element = parent;
+				}
+                else if (parent is ALittleScriptNamespaceDecElement)
                 {
                     return new ABnfGuessError(element, "全局表达式不能调用带有await的函数");
                 }
