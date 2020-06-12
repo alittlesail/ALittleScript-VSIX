@@ -19,14 +19,13 @@ namespace ALittle
 
         public ALittleScriptGuessTemplate(ALittleScriptTemplatePairDecElement p_template_pair_dec
             , ABnfGuess p_template_extends
-            , bool p_is_class, bool p_is_struct, bool p_is_const)
+            , bool p_is_class, bool p_is_struct)
         {
             is_register = ALittleScriptUtility.IsRegister(p_template_pair_dec);
             template_pair_dec = p_template_pair_dec;
             template_extends = p_template_extends;
             is_class = p_is_class;
             is_struct = p_is_struct;
-            is_const = p_is_const;
             if (p_template_extends != null) is_const = p_template_extends.is_const;
 
             var name_dec = template_pair_dec.GetTemplateNameDec();

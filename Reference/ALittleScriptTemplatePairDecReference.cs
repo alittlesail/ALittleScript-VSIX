@@ -49,8 +49,6 @@ namespace ALittle
                 is_struct = true;
             }
 
-            bool is_const = m_element.GetTemplateConst() != null;
-
             if (m_element.GetParent() == null) return new ABnfGuessError(m_element, "没有父节点");
             var parent = m_element.GetParent();
             if (parent.GetParent() == null) return new ABnfGuessError(parent, "没有父节点");
@@ -59,13 +57,13 @@ namespace ALittle
             // 根据定义区分类模板还是函数模板
             if (parent is ALittleScriptClassDecElement)
             {
-                var info = new ALittleScriptGuessClassTemplate(m_element, template_extends, is_class, is_struct, is_const);
+                var info = new ALittleScriptGuessClassTemplate(m_element, template_extends, is_class, is_struct);
                 info.UpdateValue();
                 guess_list.Add(info);
             }
             else
             {
-                var info = new ALittleScriptGuessMethodTemplate(m_element, template_extends, is_class, is_struct, is_const);
+                var info = new ALittleScriptGuessMethodTemplate(m_element, template_extends, is_class, is_struct);
                 info.UpdateValue();
                 guess_list.Add(info);
             }
@@ -85,12 +83,6 @@ namespace ALittle
                 return new ABnfGuessError(name_dec, "未知类型");
             else if (guess_list.Count != 1)
                 return new ABnfGuessError(name_dec, "重复定义");
-
-            // 这里的AllType不能使用const修饰
-            if (m_element.GetTemplateExtendsDec() != null
-                && m_element.GetTemplateExtendsDec().GetAllType() != null
-                && m_element.GetTemplateExtendsDec().GetAllType().GetAllTypeConst() != null)
-                return new ABnfGuessError(m_element.GetTemplateExtendsDec().GetAllType().GetAllTypeConst(), "模板参数定义的限定类型，不能使用const修饰");
 
             return null;
         }

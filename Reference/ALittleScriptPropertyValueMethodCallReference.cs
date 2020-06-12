@@ -253,14 +253,14 @@ namespace ALittle
                 {
                     var error = AnalysisTemplate(fill_map, left_guess_template.template_extends, right_src, right_guess, false);
                     if (error != null) return error;
-                    fill_map.Add(left_guess_template.GetValue(), right_guess);
+                    fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                     return null;
                 }
                 else if (left_guess_template.is_class)
                 {
                     if (right_guess is ALittleScriptGuessClass)
                     {
-                        fill_map.Add(left_guess_template.GetValue(), right_guess);
+                        fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                         return null;
                     }
                     else if (right_guess is ALittleScriptGuessTemplate)
@@ -268,7 +268,7 @@ namespace ALittle
                         var right_guess_template = right_guess as ALittleScriptGuessTemplate;
                         if (right_guess_template.template_extends is ALittleScriptGuessClass || right_guess_template.is_class)
                         {
-                            fill_map.Add(right_guess_template.GetValue(), right_guess);
+                            fill_map.Add(right_guess_template.GetValueWithoutConst(), right_guess);
                             return null;
                         }
                     }
@@ -278,7 +278,7 @@ namespace ALittle
                 {
                     if (right_guess is ALittleScriptGuessStruct)
                     {
-                        fill_map.Add(left_guess_template.GetValue(), right_guess);
+                        fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                         return null;
                     }
                     else if (right_guess is ALittleScriptGuessTemplate)
@@ -293,7 +293,7 @@ namespace ALittle
                     return new ABnfGuessError(right_src, "要求是" + left_guess.GetValue() + ",不能是:" + right_guess.GetValue());
                 }
 
-                fill_map.Add(left_guess_template.GetValue(), right_guess);
+                fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                 return null;
             }
 
@@ -337,7 +337,7 @@ namespace ALittle
                         if (error != null) return error;
                         error = ALittleScriptOp.GuessTypeEqual(pre_type_functor.template_param_list[i], all_type_list[i], all_type_guess, false, false);
                         if (error != null) return error;
-                        var key = pre_type_functor.template_param_list[i].GetValue();
+                        var key = pre_type_functor.template_param_list[i].GetValueWithoutConst();
                         if (fill_map.ContainsKey(key)) fill_map.Remove(key);
                         fill_map.Add(key, all_type_guess);
                     }
