@@ -15,22 +15,6 @@ namespace ALittle
         {
         }
 
-        private bool m_flag_TemplateConst = false;
-        private ALittleScriptTemplateConstElement m_cache_TemplateConst = null;
-        public ALittleScriptTemplateConstElement GetTemplateConst()
-        {
-            if (m_flag_TemplateConst) return m_cache_TemplateConst;
-            m_flag_TemplateConst = true;
-            foreach (var child in m_childs)
-            {
-                if (child is ALittleScriptTemplateConstElement)
-                {
-                    m_cache_TemplateConst = child as ALittleScriptTemplateConstElement;
-                    break;
-                }
-            }
-            return m_cache_TemplateConst;
-        }
         private bool m_flag_TemplateNameDec = false;
         private ALittleScriptTemplateNameDecElement m_cache_TemplateNameDec = null;
         public ALittleScriptTemplateNameDecElement GetTemplateNameDec()

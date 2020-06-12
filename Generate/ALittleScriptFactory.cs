@@ -37,7 +37,6 @@ namespace ALittle
             m_create_map["NamespaceDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptNamespaceDecElement(factory, file, line, col, offset, type); };
             m_create_map["NamespaceElementDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptNamespaceElementDecElement(factory, file, line, col, offset, type); };
             m_create_map["NamespaceNameDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptNamespaceNameDecElement(factory, file, line, col, offset, type); };
-            m_create_map["TemplateConst"] = (factory, file, line, col, offset, type) => { return new ALittleScriptTemplateConstElement(factory, file, line, col, offset, type); };
             m_create_map["TemplateDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptTemplateDecElement(factory, file, line, col, offset, type); };
             m_create_map["TemplatePairDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptTemplatePairDecElement(factory, file, line, col, offset, type); };
             m_create_map["TemplateNameDec"] = (factory, file, line, col, offset, type) => { return new ALittleScriptTemplateNameDecElement(factory, file, line, col, offset, type); };
