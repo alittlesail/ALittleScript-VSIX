@@ -1216,6 +1216,9 @@ namespace ALittle
             if (value_factor.GetReflectValue() != null)
                 return GenerateReflectValue(value_factor.GetReflectValue(), out content);
 
+            if (value_factor.GetPathsValue() != null)
+                return GeneratePathsValue(value_factor.GetPathsValue(), out content);
+
             if (value_factor.GetPropertyValue() != null)
                 return GeneratePropertyValue(value_factor.GetPropertyValue(), out content, out string map_set, out string map_del);
 
@@ -1242,7 +1245,6 @@ namespace ALittle
         }
 
         // 生成常量
-
         private ABnfGuessError GenerateConstValue(ALittleScriptConstValueElement const_value, out string content)
         {
             content = "";
@@ -1251,6 +1253,29 @@ namespace ALittle
                 content += "undefined";
             else
                 content += const_value_string;
+            return null;
+        }
+
+        // 生成路径信息
+        private ABnfGuessError GeneratePathsValue(ALittleScriptPathsValueElement paths_value, out string content)
+        {
+            content = "";
+            var text = paths_value.GetText();
+            if (text == null) return new ABnfGuessError(paths_value, "请输入路径");
+
+            var path = text.GetElementString().Trim();
+            var info = new DirectoryInfo(paths_value.GetProjectPath() + path);
+            if (!info.Exists) return new ABnfGuessError(paths_value, "路径不存在:" + path);
+            var path_list = new List<string>();
+            ALittleScriptUtility.GetDeepFilePaths(info, "", path_list);
+
+            content = "[";
+            for (int i = 0; i < path_list.Count; ++i)
+            {
+                if (i != 0) content += ", ";
+                content += "\"" + path_list[i] + "\"";
+            }
+            content += "]";
             return null;
         }
 

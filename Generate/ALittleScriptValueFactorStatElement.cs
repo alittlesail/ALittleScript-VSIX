@@ -63,6 +63,22 @@ namespace ALittle
             }
             return m_cache_ReflectValue;
         }
+        private bool m_flag_PathsValue = false;
+        private ALittleScriptPathsValueElement m_cache_PathsValue = null;
+        public ALittleScriptPathsValueElement GetPathsValue()
+        {
+            if (m_flag_PathsValue) return m_cache_PathsValue;
+            m_flag_PathsValue = true;
+            foreach (var child in m_childs)
+            {
+                if (child is ALittleScriptPathsValueElement)
+                {
+                    m_cache_PathsValue = child as ALittleScriptPathsValueElement;
+                    break;
+                }
+            }
+            return m_cache_PathsValue;
+        }
         private bool m_flag_PropertyValue = false;
         private ALittleScriptPropertyValueElement m_cache_PropertyValue = null;
         public ALittleScriptPropertyValueElement GetPropertyValue()

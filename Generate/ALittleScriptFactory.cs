@@ -152,6 +152,7 @@ namespace ALittle
             m_create_map["ReflectValue"] = (factory, file, line, col, offset, type) => { return new ALittleScriptReflectValueElement(factory, file, line, col, offset, type); };
             m_create_map["ReflectCustomType"] = (factory, file, line, col, offset, type) => { return new ALittleScriptReflectCustomTypeElement(factory, file, line, col, offset, type); };
             m_create_map["ReflectValueStat"] = (factory, file, line, col, offset, type) => { return new ALittleScriptReflectValueStatElement(factory, file, line, col, offset, type); };
+            m_create_map["PathsValue"] = (factory, file, line, col, offset, type) => { return new ALittleScriptPathsValueElement(factory, file, line, col, offset, type); };
             m_create_map["PropertyValue"] = (factory, file, line, col, offset, type) => { return new ALittleScriptPropertyValueElement(factory, file, line, col, offset, type); };
             m_create_map["PropertyValueFirstType"] = (factory, file, line, col, offset, type) => { return new ALittleScriptPropertyValueFirstTypeElement(factory, file, line, col, offset, type); };
             m_create_map["PropertyValueCastType"] = (factory, file, line, col, offset, type) => { return new ALittleScriptPropertyValueCastTypeElement(factory, file, line, col, offset, type); };

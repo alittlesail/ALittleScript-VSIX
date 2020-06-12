@@ -25,7 +25,8 @@ namespace ALittle
                 return m_element.GetMethodParamTailDec().GuessTypes(out guess_list);
             else if (m_element.GetCoroutineStat() != null)
                 return m_element.GetCoroutineStat().GuessTypes(out guess_list);
-
+            else if (m_element.GetPathsValue() != null)
+                return m_element.GetPathsValue().GuessTypes(out guess_list);
             guess_list = new List<ABnfGuess>();
             return null;
         }

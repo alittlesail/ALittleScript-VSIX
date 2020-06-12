@@ -312,6 +312,7 @@
     <Compile Include="Generate\ALittleScriptOpAssignExprElement.cs" />
     <Compile Include="Generate\ALittleScriptOpNewListStatElement.cs" />
     <Compile Include="Generate\ALittleScriptOpNewStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptPathsValueElement.cs" />
     <Compile Include="Generate\ALittleScriptPrimitiveTypeElement.cs" />
     <Compile Include="Generate\ALittleScriptPropertyValueBracketValueElement.cs" />
     <Compile Include="Generate\ALittleScriptPropertyValueCastTypeElement.cs" />
@@ -417,6 +418,7 @@
     <Compile Include="Reference\ALittleScriptMethodReturnDecReference.cs" />
     <Compile Include="Reference\ALittleScriptNamespaceElementDecReference.cs" />
     <Compile Include="Reference\ALittleScriptFlowExprReference.cs" />
+    <Compile Include="Reference\ALittleScriptPathsValueReference.cs" />
     <Compile Include="Reference\ALittleScriptRegexReference.cs" />
     <Compile Include="Reference\ALittleScriptWhileConditionReference.cs" />
     <Compile Include="Reference\ALittleScriptIfConditionReference.cs" />

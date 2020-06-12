@@ -70,6 +70,7 @@ namespace ALittle
             m_create_map[typeof(ALittleScriptOpAssignExprElement)] = (element) => { return new ALittleScriptOpAssignExprReference(element); };
             m_create_map[typeof(ALittleScriptOpNewListStatElement)] = (element) => { return new ALittleScriptOpNewListStatReference(element); };
             m_create_map[typeof(ALittleScriptOpNewStatElement)] = (element) => { return new ALittleScriptOpNewStatReference(element); };
+            m_create_map[typeof(ALittleScriptPathsValueElement)] = (element) => { return new ALittleScriptPathsValueReference(element); };
             m_create_map[typeof(ALittleScriptPrimitiveTypeElement)] = (element) => { return new ALittleScriptPrimitiveTypeReference(element); };
             m_create_map[typeof(ALittleScriptPropertyValueBracketValueElement)] = (element) => { return new ALittleScriptPropertyValueBracketValueReference(element); };
             m_create_map[typeof(ALittleScriptPropertyValueCastTypeElement)] = (element) => { return new ALittleScriptPropertyValueCastTypeReference(element); };

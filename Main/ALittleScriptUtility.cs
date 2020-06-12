@@ -23,6 +23,20 @@ namespace ALittle
             info.Delete();
         }
 
+        // 获取文件夹，以及子文件和子文件夹
+        public static void GetDeepFilePaths(DirectoryInfo info, string parent, List<string> result)
+        {
+            if (!info.Exists) return;
+
+            var file_list = info.GetFiles();
+            foreach (var file in file_list)
+                result.Add(parent + file.Name);
+
+            var dir_list = info.GetDirectories();
+            foreach (var dir in dir_list)
+                GetDeepFilePaths(dir, parent + dir.Name + "/", result);
+        }
+
         // 判断字符串是不是整型值
         public static bool IsInt(ALittleScriptNumberElement element)
         {

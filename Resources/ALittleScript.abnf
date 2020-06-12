@@ -241,7 +241,7 @@ PrimitiveType = <bool> | <double> | <int> | <long> | <any> | <string>;
 
 //复合值///////////////////////////////////////////////////////////////////
 ValueStat = OpNewStat | OpNewListStat | BindStat | TcallStat | Op2Stat | ValueOpStat;
-ValueFactorStat = WrapValueStat | ConstValue | ReflectValue | PropertyValue | MethodParamTailDec | CoroutineStat;
+ValueFactorStat = WrapValueStat | ConstValue | ReflectValue | PathsValue | PropertyValue | MethodParamTailDec | CoroutineStat;
 ValueOpStat = ValueFactorStat (Op3Stat | Op4Stat | Op5Stat | Op6Stat | Op7Stat | Op8Stat)?;
 
 // new
@@ -264,6 +264,9 @@ CoroutineStat = <co>;
 ReflectValue = <reflect>@ (ReflectCustomType | ReflectValueStat);
 ReflectCustomType = '<'@ CustomType '>';
 ReflectValueStat = '('@ ValueStat ')';
+
+// 文件宏
+PathsValue = <paths>@ '('@ Text? ')';
 
 // 属性
 PropertyValue = PropertyValueFirstType PropertyValueSuffix*;
