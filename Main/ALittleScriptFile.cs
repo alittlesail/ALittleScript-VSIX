@@ -82,7 +82,29 @@ namespace ALittle
 
                     var result = MessageBox.Show(pair.Value.GetFullPath() + "\n" + error.GetError() + "\n是否打开错误文件?", "生成失败", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
-                        ALanguageUtility.OpenFile(pair.Value.GetFullPath());
+                    {
+                        int start = 0;
+                        int length = 0;
+                        if (error.GetElement() != null)
+						{
+                            start = error.GetElement().GetStart();
+                            length = error.GetElement().GetLength();
+                            if (length <= 0) length = 1;
+						}
+                        string full_path = pair.Value.GetFullPath();
+
+                        try
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                ALanguageUtility.OpenFile(null, ALittleScriptVsTextViewCreationListener.s_adapters_factory, full_path, start, length);
+                            });
+                        }
+                        catch (System.Exception)
+                        {
+
+                        }
+                    }
                     return true;
                 }
             }

@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Classification;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace ALittle
 {
@@ -31,11 +32,19 @@ namespace ALittle
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
     public class ALittleScriptVsTextViewCreationListener : ALanguageVsTextViewCreationListener
     {
+        public static IVsEditorAdaptersFactoryService s_adapters_factory = null;
         public ALittleScriptVsTextViewCreationListener()
         {
             m_factory = ALittleScriptFactoryClass.inst;
+            SaveAdapterFactory();
         }
-    }
+
+		protected override void SaveAdapterFactory()
+		{
+            if (s_adapters_factory == null)
+                s_adapters_factory = m_adapters_factory;
+		}
+	}
 
     // 预测列表
     [Export(typeof(ICompletionSourceProvider))]

@@ -253,6 +253,7 @@ namespace ALittle
                 {
                     var error = AnalysisTemplate(fill_map, left_guess_template.template_extends, right_src, right_guess, false);
                     if (error != null) return error;
+                    if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                     fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                     return null;
                 }
@@ -260,6 +261,7 @@ namespace ALittle
                 {
                     if (right_guess is ALittleScriptGuessClass)
                     {
+                        if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                         fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                         return null;
                     }
@@ -268,6 +270,7 @@ namespace ALittle
                         var right_guess_template = right_guess as ALittleScriptGuessTemplate;
                         if (right_guess_template.template_extends is ALittleScriptGuessClass || right_guess_template.is_class)
                         {
+                            if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                             fill_map.Add(right_guess_template.GetValueWithoutConst(), right_guess);
                             return null;
                         }
@@ -278,6 +281,7 @@ namespace ALittle
                 {
                     if (right_guess is ALittleScriptGuessStruct)
                     {
+                        if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                         fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                         return null;
                     }
@@ -286,6 +290,7 @@ namespace ALittle
                         var right_guess_template = right_guess as ALittleScriptGuessTemplate;
                         if (right_guess_template.template_extends is ALittleScriptGuessStruct || right_guess_template.is_struct)
                         {
+                            if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                             fill_map.Add(left_guess_template.GetValue(), right_guess);
                             return null;
                         }
@@ -293,6 +298,7 @@ namespace ALittle
                     return new ABnfGuessError(right_src, "要求是" + left_guess.GetValue() + ",不能是:" + right_guess.GetValue());
                 }
 
+                if (right_guess.is_const) { right_guess = right_guess.Clone(); right_guess.is_const = false; right_guess.UpdateValue(); }
                 fill_map.Add(left_guess_template.GetValueWithoutConst(), right_guess);
                 return null;
             }
@@ -339,6 +345,7 @@ namespace ALittle
                         if (error != null) return error;
                         var key = pre_type_functor.template_param_list[i].GetValueWithoutConst();
                         if (fill_map.ContainsKey(key)) fill_map.Remove(key);
+                        if (all_type_guess.is_const) { all_type_guess = all_type_guess.Clone(); all_type_guess.is_const = false; all_type_guess.UpdateValue(); }
                         fill_map.Add(key, all_type_guess);
                     }
                 }

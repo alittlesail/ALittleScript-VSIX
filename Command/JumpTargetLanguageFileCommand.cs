@@ -107,7 +107,7 @@ namespace ALittle
 
             string full_path = ALittleScriptUtility.CalcTargetFullPath(info.GetProjectPath(), info.GetFullPath(), ext, out _);
             if (full_path == null) return;
-            ALanguageUtility.OpenFile(full_path);
+            ALanguageUtility.OpenFile(null, ALittleScriptVsTextViewCreationListener.s_adapters_factory, full_path, 0, 0);
         }
     }
 }
