@@ -343,6 +343,7 @@
     <Compile Include="Generate\ALittleScriptStructVarDecElement.cs" />
     <Compile Include="Generate\ALittleScriptStructVarNameDecElement.cs" />
     <Compile Include="Generate\ALittleScriptTcallStatElement.cs" />
+    <Compile Include="Generate\ALittleScriptTemplateConstElement.cs" />
     <Compile Include="Generate\ALittleScriptTemplateDecElement.cs" />
     <Compile Include="Generate\ALittleScriptTemplateExtendsClassDecElement.cs" />
     <Compile Include="Generate\ALittleScriptTemplateExtendsDecElement.cs" />

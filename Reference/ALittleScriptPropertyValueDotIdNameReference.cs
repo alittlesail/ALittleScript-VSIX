@@ -237,7 +237,7 @@ namespace ALittle
             if (pre_type is ALittleScriptGuessTemplate)
             {
                 pre_type = (pre_type as ALittleScriptGuessTemplate).template_extends;
-                if (is_const && !pre_type.is_const)
+                if (pre_type != null && is_const && !pre_type.is_const)
                 {
                     pre_type = pre_type.Clone();
                     pre_type.is_const = true;

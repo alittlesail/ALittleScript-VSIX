@@ -2572,12 +2572,14 @@ namespace ALittle
 					{
                         var error = GenerateConstValue(var_value_dec.GetConstValue(), out var var_value_content);
                         if (error != null) return null;
+                        ++m_rawset_usecount;
                         var_init += pre_tab + "\t" + "___rawset(self, \"" + var_name + "\", " + var_value_content + ")\n";
                     }
                     else if (var_value_dec.GetOpNewStat() != null)
                     {
                         var error = GenerateOpNewStat(var_value_dec.GetOpNewStat(), out var op_new_stat_content);
                         if (error != null) return null;
+                        ++m_rawset_usecount;
                         var_init += pre_tab + "\t" + "___rawset(self, \"" + var_name + "\", " + op_new_stat_content + ")\n";
                     }
                 }

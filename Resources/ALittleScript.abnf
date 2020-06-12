@@ -56,8 +56,9 @@ NamespaceElementDec = Modifier* (GlobalMethodDec | ClassDec | EnumDec | StructDe
 NamespaceNameDec = Id;
 
 // Ä£°å¶¨Òå
+TemplateConst = <const>@;
 TemplateDec = '<'@ TemplatePairDec (','@ TemplatePairDec)* '>';
-TemplatePairDec = TemplateNameDec@ TemplateExtendsDec?;
+TemplatePairDec = TemplateConst? TemplateNameDec@ TemplateExtendsDec?;
 TemplateNameDec = Id;
 TemplateExtendsDec = ':'@ (AllType | TemplateExtendsClassDec | TemplateExtendsStructDec);
 TemplateExtendsClassDec = <class>;
