@@ -314,6 +314,7 @@ namespace ALittle
                     if (!(guess is ALittleScriptGuessClass)) continue;
                     var element = ((ALittleScriptGuessClass)guess).GetElement();
                     if (element == null) continue;
+                    if (file_path == element.GetFullPath()) continue;
                     result.Add(element.GetFullPath());
                 }
             }
