@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Media;
 
 namespace ALittle
@@ -191,6 +192,132 @@ namespace ALittle
                     if (map.ContainsKey(element)) map.Remove(element);
                 }
             }
+        }
+
+        class RelayInfo
+        {
+            public HashSet<RelayInfo> be_used_set; // 被依赖集合
+            public HashSet<RelayInfo> use_set;    // 依赖集合
+
+            public string path;
+            public HashSet<string> relay_set;
+            public string rel_path;
+        }
+
+        // 删除文件夹
+        public static ABnfGuessError GetDeepFilePaths(ProjectInfo project, DirectoryInfo info, string parent_path, List<string> result)
+        {
+            if (project == null) return null;
+            if (!info.Exists) return null;
+
+            // 初始化依赖信息
+            var relay_map = new Dictionary<string, RelayInfo>();
+            var file_list = info.GetFiles();
+            foreach (FileInfo file in file_list)
+            {
+                var full_path = file.DirectoryName + "\\" + file.Name;
+                var relay_set = new HashSet<string>();
+                FindDefineRelay(project, full_path, relay_set);
+                var relay_info = new RelayInfo();
+                relay_info.path = full_path;
+                relay_info.rel_path = parent_path + file.Name;
+                relay_info.relay_set = relay_set;
+                relay_info.be_used_set = new HashSet<RelayInfo>();
+                relay_info.use_set = new HashSet<RelayInfo>();
+                if (relay_map.ContainsKey(relay_info.path)) relay_map.Remove(relay_info.path);
+                relay_map.Add(relay_info.path, relay_info);
+            }
+
+            // 形成通路
+            foreach (var relay_info in relay_map.Values)
+            {
+                foreach (string child_path in relay_info.relay_set)
+                {
+                    relay_map.TryGetValue(child_path, out var child);
+                    if (child == null) continue;
+                    if (!child.be_used_set.Contains(relay_info))
+                        child.be_used_set.Add(relay_info);
+                    if (!relay_info.use_set.Contains(child))
+                        relay_info.use_set.Add(child);
+                }
+            }
+
+            // 都放进列表中，并排序
+            var info_list = new List<RelayInfo>();
+            info_list.AddRange(relay_map.Values);
+            info_list.Sort((RelayInfo a, RelayInfo b) => { return a.path.CompareTo(b.path); });
+
+            // 遍历列表
+            while (info_list.Count > 0)
+            {
+                // 用于接收未处理的列表
+                var new_info_list = new List<RelayInfo>();
+                // 遍历列表进行处理
+                foreach (var relay_info in info_list)
+                {
+                    // 如果已经没有依赖了，那么就添加进result，然后解除依赖关系
+                    if (relay_info.use_set.Count == 0)
+                    {
+                        result.Add(relay_info.rel_path);
+                        foreach (var be_used_info in relay_info.be_used_set)
+                            be_used_info.use_set.Remove(relay_info);
+                        relay_info.be_used_set.Clear();
+                    } else {
+                         new_info_list.Add(relay_info);
+                    }
+                }
+                // 如果一轮下来没有减少，那么就抛异常
+                if (new_info_list.Count == info_list.Count)
+                {
+                    string content = "";
+                    foreach (var relayInfo in new_info_list)
+                    {
+                        content += relayInfo.rel_path + " -> ";
+                        foreach (var use_info in relayInfo.use_set)
+                            content += use_info.rel_path;
+                        content += ";";
+                    }
+                    return new ABnfGuessError(null, "出现循环引用 " + content);
+                }
+
+                // 把收集的列表复制给info_list，进行下一轮循环
+                info_list = new_info_list;
+            }
+
+            var dir_list = info.GetDirectories();
+            foreach (DirectoryInfo file in dir_list)
+            {
+                var error = GetDeepFilePaths(project, file, parent_path + file.Name + "/", result);
+                if (error != null) return error;
+            }
+
+            return null;
+        }
+        public static ABnfGuessError FindDefineRelay(ProjectInfo project, string file_path, HashSet<string> result)
+        {
+            var file = project.GetFile(file_path);
+            if (file == null) return null;
+
+            var abnf_file = file.GetFile();
+            if (abnf_file == null) return null;
+
+            var dec = ALittleScriptUtility.GetNamespaceDec(abnf_file);
+            if (dec == null) return null;
+            var element_dec_list = dec.GetNamespaceElementDecList();
+            foreach (var element_dec in element_dec_list)
+            {
+                if (element_dec.GetClassDec() != null)
+                {
+                    var extendsDec = element_dec.GetClassDec().GetClassExtendsDec();
+                    if (extendsDec == null) continue;
+                    var error = extendsDec.GuessType(out var guess);
+                    if (!(guess is ALittleScriptGuessClass)) continue;
+                    var element = ((ALittleScriptGuessClass)guess).GetElement();
+                    if (element == null) continue;
+                    result.Add(element.GetFullPath());
+                }
+            }
+            return null;
         }
 
         public Dictionary<string, ALittleScriptNamespaceNameDecElement> FindNamespaceNameDecList(string namespace_name)

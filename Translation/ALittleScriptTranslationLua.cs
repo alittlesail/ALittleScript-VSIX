@@ -1107,7 +1107,7 @@ namespace ALittle
             var info = new DirectoryInfo(paths_value.GetProjectPath() + path);
             if (!info.Exists) return new ABnfGuessError(paths_value, "路径不存在:" + path);
             var path_list = new List<string>();
-            ALittleScriptUtility.GetDeepFilePaths(info, "", path_list);
+            ALittleScriptIndex.GetDeepFilePaths(paths_value.GetFile().GetProjectInfo(), info, "", path_list);
 
             content = "{";
             for (int i = 0; i < path_list.Count; ++i)
