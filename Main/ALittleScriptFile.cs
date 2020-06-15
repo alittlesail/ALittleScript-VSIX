@@ -150,10 +150,10 @@ namespace ALittle
             m_root = null;
             if (m_abnf == null) return;
 
-            var time_1 = DateTime.Now;
+            // var time_1 = DateTime.Now;
             m_root = m_abnf.Analysis(this);
-            var time_2 = DateTime.Now;
-            System.Diagnostics.Debug.WriteLine(m_full_path + ": UpdateAnalysis " + (time_2 - time_1).TotalMilliseconds + "毫秒");
+            // var time_2 = DateTime.Now;
+            // System.Diagnostics.Debug.WriteLine(m_full_path + ": UpdateAnalysis " + (time_2 - time_1).TotalMilliseconds + "毫秒");
         }
 
         public override void UpdateError()
