@@ -120,6 +120,24 @@ namespace ALittle
                 return new ABnfGuessError(m_element, "未知类型");
             else if (guess_list.Count != 1)
                 return new ABnfGuessError(m_element, "重复定义");
+
+            if (m_method_dec == null)
+                ReloadInfo();
+
+            // 处理参数
+            if (m_method_dec != null)
+            {
+                var dec_list = ALittleScriptUtility.FindMethodParamNameDecList(m_method_dec, m_key);
+                if (dec_list.Count > 0)
+                    return new ABnfGuessError(m_element, "重复定义");
+            }
+            // 处理表达式定义
+            {
+                var dec_list = ALittleScriptUtility.FindVarAssignNameDecList(m_element, m_key);
+                if (dec_list.Count > 0)
+                    return new ABnfGuessError(m_element, "重复定义");
+            }
+
             return null;
         }
 

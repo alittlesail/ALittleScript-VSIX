@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALanguage", "..\ALanguage\ALanguage.csproj", "{720498DE-E807-4276-B4D8-76A9DB753633}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALittleScript", "ALittleScript.csproj", "{7365C485-4B91-4A75-947C-695A17D4F98C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALanguage", "..\..\ALanguage-VSIX\trunk\ALanguage.csproj", "{720498DE-E807-4276-B4D8-76A9DB753633}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{720498DE-E807-4276-B4D8-76A9DB753633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{720498DE-E807-4276-B4D8-76A9DB753633}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{720498DE-E807-4276-B4D8-76A9DB753633}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{720498DE-E807-4276-B4D8-76A9DB753633}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7365C485-4B91-4A75-947C-695A17D4F98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7365C485-4B91-4A75-947C-695A17D4F98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7365C485-4B91-4A75-947C-695A17D4F98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7365C485-4B91-4A75-947C-695A17D4F98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{720498DE-E807-4276-B4D8-76A9DB753633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{720498DE-E807-4276-B4D8-76A9DB753633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{720498DE-E807-4276-B4D8-76A9DB753633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{720498DE-E807-4276-B4D8-76A9DB753633}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
