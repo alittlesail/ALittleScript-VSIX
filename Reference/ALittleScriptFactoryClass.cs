@@ -285,7 +285,17 @@ namespace ALittle
 
             return -1;
         }
-    }
+
+		public override bool TypeChar(UIViewItem info, int offset, char c)
+		{
+            if (c == ';')
+			{
+                info.RejustLineIndentation(offset);
+                return true;
+			}
+            return false;
+		}
+	}
 
     public class ALittleScriptReferenceTemplate<T> : ABnfReferenceTemplate<T> where T : ABnfElement
     {
