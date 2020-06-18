@@ -293,6 +293,28 @@ namespace ALittle
                 info.RejustLineIndentation(offset);
                 return true;
 			}
+            if (c == '}')
+            {
+                var indent_root = info.GetIndentRoot();
+                if (indent_root != null)
+				{
+                    var element = indent_root.GetException(offset-1);
+                    var node = element as ABnfNodeElement;
+                    if (node == null) node = element.GetParent();
+                    if (node != null)
+					{
+                        var childs = node.GetChilds();
+                        if (childs.Count > 0 && childs[0] is ABnfStringElement && childs[0].GetElementText() == "{")
+                        {
+                            if (info.CalcLineNumbers(childs[0].GetStart(), offset, out int line_start, out int line_end))
+                            {
+                                info.RejustMultiLineIndentation(line_start, line_end);
+                                return true;
+                            }
+                        }
+                    }
+				}
+            }
             return false;
 		}
 	}
@@ -450,11 +472,10 @@ namespace ALittle
 
         public override int GetDesiredIndentation(int offset, ABnfElement select)
         {
-            if (m_indent >= 0) return m_indent;
-
             ABnfElement parent = m_element.GetParent();
             if (parent == null)
             {
+                if (m_indent >= 0) return m_indent;
                 m_indent = 0;
                 return m_indent;
             }
@@ -471,18 +492,19 @@ namespace ALittle
                 || m_element is ALittleScriptElseBodyElement
                 || m_element is ALittleScriptWrapExprElement)
             {
-                if (select is ABnfStringElement && (select.GetElementText() == "{" || select.GetElementText() == "}"))
-                {
+                if (m_indent < 0)
                     m_indent = parent.GetReference().GetDesiredIndentation(offset, null);
+                if (select is ABnfStringElement && select.GetElementText() == "{")
                     return m_indent;
-                }
-
-                m_indent = parent.GetReference().GetDesiredIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                int find = m_element.FindForwardFirstEnterAndHaveNotSpaceOrTab();
+                if (find < 0 || offset <= find || offset > m_element.GetEnd()) return m_indent + ALanguageSmartIndentProvider.s_indent_size;
                 return m_indent;
             }
             else if (m_element is ALittleScriptMethodParamDecElement
                 || m_element is ALittleScriptOpNewListStatElement)
             {
+                if (m_indent >= 0) return m_indent;
+
                 var element = m_element as ABnfNodeElement;
                 var childs = element.GetChilds();
                 if (childs.Count > 0)
@@ -492,6 +514,7 @@ namespace ALittle
                 }
             }
 
+            if (m_indent >= 0) return m_indent;
             m_indent = parent.GetReference().GetDesiredIndentation(offset, null);
             return m_indent;
         }
