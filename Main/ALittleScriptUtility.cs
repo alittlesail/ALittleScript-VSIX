@@ -867,6 +867,19 @@ namespace ALittle
                     FindVarAssignNameDecList(parent as ALittleScriptAllExprElement, var_dec_list, name);
                     break;
                 }
+                if (parent is ALittleScriptForStartStatElement)
+                {
+                    var for_step_condition = parent.GetParent() as ALittleScriptForStepConditionElement;
+                    if (for_step_condition == null) break;
+                    var for_condition = for_step_condition.GetParent() as ALittleScriptForConditionElement;
+                    if (for_condition == null) break;
+                    var for_expr = for_condition.GetParent() as ALittleScriptForExprElement;
+                    if (for_expr == null) break;
+                    var all_expr = for_expr.GetParent() as ALittleScriptAllExprElement;
+                    if (all_expr == null) break;
+                    FindVarAssignNameDecList(all_expr, var_dec_list, name);
+                    break;
+                }
                 if (parent is ALittleScriptForStepConditionElement)
                 {
                     var for_condition = parent.GetParent() as ALittleScriptForConditionElement;
