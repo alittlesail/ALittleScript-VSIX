@@ -321,7 +321,8 @@ namespace ALittle
 
     public class ALittleScriptReferenceTemplate<T> : ABnfReferenceTemplate<T> where T : ABnfElement
     {
-        private int m_indent = -1;
+        private int m_format_indent = -1;
+        private int m_desire_indent = -1;
 
         public ALittleScriptReferenceTemplate(ABnfElement element) : base(element)
         {
@@ -475,11 +476,11 @@ namespace ALittle
             ABnfElement parent = m_element.GetParent();
             if (parent == null)
             {
-                if (m_indent >= 0) return m_indent;
-                m_indent = 0;
-                return m_indent;
+                if (m_desire_indent >= 0) return m_desire_indent;
+                m_desire_indent = 0;
+                return m_desire_indent;
             }
-            
+
             if (m_element is ALittleScriptClassBodyDecElement
                 || m_element is ALittleScriptStructBodyDecElement
                 || m_element is ALittleScriptEnumBodyDecElement
@@ -492,33 +493,94 @@ namespace ALittle
                 || m_element is ALittleScriptElseBodyElement
                 || m_element is ALittleScriptWrapExprElement)
             {
-                if (m_indent < 0)
-                    m_indent = parent.GetReference().GetDesiredIndentation(offset, null);
+                if (m_desire_indent < 0)
+                    m_desire_indent = parent.GetReference().GetDesiredIndentation(offset, null);
                 if (select is ABnfStringElement && select.GetElementText() == "{")
-                    return m_indent;
+                    return m_desire_indent;
                 int find = m_element.FindForwardFirstEnterAndHaveNotSpaceOrTab();
-                if (find < 0 || offset <= find || offset > m_element.GetEnd()) return m_indent + ALanguageSmartIndentProvider.s_indent_size;
-                return m_indent;
+                if (find < 0 || offset <= find || offset > m_element.GetEnd()) return m_desire_indent + ALanguageSmartIndentProvider.s_indent_size;
+                return m_desire_indent;
             }
             else if (m_element is ALittleScriptMethodParamDecElement
                 || m_element is ALittleScriptOpNewListStatElement)
             {
-                if (m_indent >= 0) return m_indent;
+                if (m_desire_indent >= 0) return m_desire_indent;
 
                 var element = m_element as ABnfNodeElement;
                 var childs = element.GetChilds();
                 if (childs.Count > 0)
                 {
-                    m_indent = childs[0].GetStartIndent();
-                    return m_indent;
+                    m_desire_indent = childs[0].GetStartIndent();
+                    return m_desire_indent;
                 }
             }
 
-            if (m_indent >= 0) return m_indent;
-            m_indent = parent.GetReference().GetDesiredIndentation(offset, null);
-            return m_indent;
+            if (m_desire_indent >= 0) return m_desire_indent;
+            m_desire_indent = parent.GetReference().GetDesiredIndentation(offset, null);
+            return m_desire_indent;
         }
 
+
+        public override int GetFormatIndentation(int offset, ABnfElement select)
+        {
+            if (m_format_indent >= 0) return m_format_indent;
+
+            ABnfElement parent = m_element.GetParent();
+            if (parent == null)
+            {
+                m_format_indent = 0;
+                return m_format_indent;
+            }
+
+            if (m_element is ALittleScriptAllExprElement
+                || m_element is ALittleScriptLineCommentElement
+                || m_element is ALittleScriptBlockCommentElement)
+            {
+                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null);
+                if (parent is ALittleScriptForExprElement
+                    || parent is ALittleScriptWhileExprElement
+                    || parent is ALittleScriptIfExprElement
+                    || parent is ALittleScriptElseIfExprElement
+                    || parent is ALittleScriptElseExprElement
+
+                    || parent is ALittleScriptClassBodyDecElement
+                    || parent is ALittleScriptEnumBodyDecElement
+                    || parent is ALittleScriptStructBodyDecElement
+
+                    || parent is ALittleScriptMethodBodyDecElement
+                    || parent is ALittleScriptForBodyElement
+                    || parent is ALittleScriptWhileBodyElement
+                    || parent is ALittleScriptDoWhileBodyElement
+                    || parent is ALittleScriptIfBodyElement
+                    || parent is ALittleScriptElseIfBodyElement
+                    || parent is ALittleScriptElseBodyElement
+                    || parent is ALittleScriptWrapExprElement)
+                    m_format_indent += ALanguageSmartIndentProvider.s_indent_size;
+                return m_format_indent;
+            }
+            else if (m_element is ALittleScriptClassElementDecElement
+                || m_element is ALittleScriptEnumVarDecElement
+                || m_element is ALittleScriptStructVarDecElement
+                || m_element is ALittleScriptStructOptionDecElement)
+            {
+                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                return m_format_indent;
+            }
+            else if (m_element is ALittleScriptMethodParamDecElement
+                || m_element is ALittleScriptOpNewListStatElement)
+            {
+                var element = m_element as ABnfNodeElement;
+                var childs = element.GetChilds();
+                if (childs.Count > 0)
+                {
+                    m_format_indent = childs[0].GetStartIndent();
+                    return m_format_indent;
+                }
+            }
+
+            m_format_indent = parent.GetReference().GetFormatIndentation(offset, null);
+            return m_format_indent;
+        }
     }
 }
 
