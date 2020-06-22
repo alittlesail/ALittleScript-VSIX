@@ -25,7 +25,6 @@ namespace ALittle
             try
             {
                 var error = generator.Generate(this, true);
-
                 if (error != null)
                 {
                     var message = error.GetError();
@@ -80,7 +79,9 @@ namespace ALittle
                     var error = generator.Generate(pair.Value.GetFile(), true);
                     if (error == null) continue;
 
-                    var result = MessageBox.Show(pair.Value.GetFullPath() + "\n" + error.GetError() + "\n是否打开错误文件?", "生成失败", MessageBoxButton.YesNo);
+                    string full_path = pair.Value.GetFullPath();
+                    if (error.GetElement() != null) full_path = error.GetElement().GetFullPath();
+                    var result = MessageBox.Show(full_path + "\n" + error.GetError() + "\n是否打开错误文件?", "生成失败", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
                     {
                         int start = 0;
@@ -91,7 +92,6 @@ namespace ALittle
                             length = error.GetElement().GetLength();
                             if (length <= 0) length = 1;
 						}
-                        string full_path = pair.Value.GetFullPath();
 
                         try
                         {
