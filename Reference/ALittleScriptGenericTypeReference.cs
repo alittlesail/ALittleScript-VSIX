@@ -108,7 +108,7 @@ namespace ALittle
                                     return new ABnfGuessError(return_one, "未知类型");
                                 if (i + 1 != return_one_list.Count)
                                     return new ABnfGuessError(return_one, "返回值占位符必须定义在最后");
-                                info.param_tail = new ALittleScriptGuessParamTail(return_tail.GetElementText());
+                                info.return_tail = new ALittleScriptGuessReturnTail(return_tail.GetElementText());
                             }
                         }
                     }
