@@ -514,6 +514,20 @@ namespace ALittle
                     return m_desire_indent;
                 }
             }
+            else if (m_element is ALittleScriptOp8Element
+                || m_element is ALittleScriptOp7Element
+                || m_element is ALittleScriptOp6Element
+                || m_element is ALittleScriptOp5Element
+                || m_element is ALittleScriptOp4Element
+                || m_element is ALittleScriptOp3Element
+                || m_element is ALittleScriptOp2Element
+                || m_element is ALittleScriptOp1Element)
+            {
+                if (m_desire_indent >= 0) return m_desire_indent;
+
+                m_desire_indent = parent.GetReference().GetDesiredIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                return m_desire_indent;
+            }
 
             if (m_desire_indent >= 0) return m_desire_indent;
             m_desire_indent = parent.GetReference().GetDesiredIndentation(offset, null);
@@ -576,6 +590,18 @@ namespace ALittle
                     m_format_indent = childs[0].GetStartIndent();
                     return m_format_indent;
                 }
+            }
+            else if (m_element is ALittleScriptOp8Element
+                || m_element is ALittleScriptOp7Element
+                || m_element is ALittleScriptOp6Element
+                || m_element is ALittleScriptOp5Element
+                || m_element is ALittleScriptOp4Element
+                || m_element is ALittleScriptOp3Element
+                || m_element is ALittleScriptOp2Element
+                || m_element is ALittleScriptOp1Element)
+            {
+                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                return m_format_indent;
             }
 
             m_format_indent = parent.GetReference().GetFormatIndentation(offset, null);
