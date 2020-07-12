@@ -154,7 +154,7 @@ namespace ALittle
 
         public static int StructReflectSort(StructReflectInfo a, StructReflectInfo b)
         {
-            return a.hash_code - b.hash_code;
+            return Math.Abs(a.hash_code) - Math.Abs(b.hash_code);
         }
     }
 }
