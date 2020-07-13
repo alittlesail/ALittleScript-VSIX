@@ -535,7 +535,7 @@ namespace ALittle
         }
 
 
-        public override int GetFormatIndentation(int offset, ABnfElement select)
+        public override int GetFormateIndentation(int offset, ABnfElement select)
         {
             if (m_format_indent >= 0) return m_format_indent;
 
@@ -550,7 +550,7 @@ namespace ALittle
                 || m_element is ALittleScriptLineCommentElement
                 || m_element is ALittleScriptBlockCommentElement)
             {
-                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null);
+                m_format_indent = parent.GetReference().GetFormateIndentation(offset, null);
                 if (parent is ALittleScriptForExprElement
                     || parent is ALittleScriptWhileExprElement
                     || parent is ALittleScriptIfExprElement
@@ -577,7 +577,7 @@ namespace ALittle
                 || m_element is ALittleScriptStructVarDecElement
                 || m_element is ALittleScriptStructOptionDecElement)
             {
-                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                m_format_indent = parent.GetReference().GetFormateIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
                 return m_format_indent;
             }
             else if (m_element is ALittleScriptMethodParamDecElement
@@ -600,11 +600,11 @@ namespace ALittle
                 || m_element is ALittleScriptOp2Element
                 || m_element is ALittleScriptOp1Element)
             {
-                m_format_indent = parent.GetReference().GetFormatIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
+                m_format_indent = parent.GetReference().GetFormateIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
                 return m_format_indent;
             }
 
-            m_format_indent = parent.GetReference().GetFormatIndentation(offset, null);
+            m_format_indent = parent.GetReference().GetFormateIndentation(offset, null);
             return m_format_indent;
         }
     }

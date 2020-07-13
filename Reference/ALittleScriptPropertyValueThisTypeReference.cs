@@ -86,8 +86,9 @@ namespace ALittle
                     {
                         if (guess is ALittleScriptGuessPrimitive)
                         {
+                            var guess_value = guess.GetValue();
                             ALittleScriptIndex.inst.sPrimitiveGuessMap.TryGetValue("const " + guess.GetValue(), out guess);
-                            if (guess == null) return new ABnfGuessError(m_element, "找不到const " + guess.GetValue());
+                            if (guess == null) return new ABnfGuessError(m_element, "找不到const " + guess_value);
                         }
                         else
                         {
