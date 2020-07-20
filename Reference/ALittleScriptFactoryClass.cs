@@ -520,8 +520,7 @@ namespace ALittle
                 || m_element is ALittleScriptOp5Element
                 || m_element is ALittleScriptOp4Element
                 || m_element is ALittleScriptOp3Element
-                || m_element is ALittleScriptOp2Element
-                || m_element is ALittleScriptOp1Element)
+                || m_element is ALittleScriptOp2Element)
             {
                 if (m_desire_indent >= 0) return m_desire_indent;
 
@@ -597,8 +596,7 @@ namespace ALittle
                 || m_element is ALittleScriptOp5Element
                 || m_element is ALittleScriptOp4Element
                 || m_element is ALittleScriptOp3Element
-                || m_element is ALittleScriptOp2Element
-                || m_element is ALittleScriptOp1Element)
+                || m_element is ALittleScriptOp2Element)
             {
                 m_format_indent = parent.GetReference().GetFormateIndentation(offset, null) + ALanguageSmartIndentProvider.s_indent_size;
                 return m_format_indent;

@@ -11,7 +11,7 @@
 //***************************************************************************-->
 <PackageManifest Version="2.0.0" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
     <Metadata>
-        <Identity Id="c729d6b2-f513-98df-893d-a8f61f25db90" Version="1.82" Language="zh-Hans" Publisher="ouxingfan" />
+        <Identity Id="c729d6b2-f513-98df-893d-a8f61f25db90" Version="1.83" Language="zh-Hans" Publisher="ouxingfan" />
         <DisplayName>ALittleScript</DisplayName>
         <Description xml:space="preserve">ALittle Script 可生成lua脚本运行ALittle</Description>
         <Icon>Resources\ALittleScriptFile.png</Icon>
