@@ -235,7 +235,7 @@ namespace ALittle
                         if (guess_class.using_name != null) name = guess_class.using_name;
                         // 拆分名称，检查命名域，如果与当前相同，或者是lua，那么就去掉
                         string[] split = name.Split('.');
-                        if (split.Length == 2 && (split[0] == m_namespace_name || split[0] == "lua"))
+                        if (split.Length == 2 && split[0] == "lua")
                             template_param_list.Add(split[1]);
                         else
                             template_param_list.Add(name);
@@ -269,7 +269,7 @@ namespace ALittle
 
                         // 计算实际类名
                         string class_name = full_class_name;
-                        if (guess_class.namespace_name == m_namespace_name || guess_class.namespace_name == "lua")
+                        if (guess_class.namespace_name == "lua")
                             class_name = guess_class.class_name;
 
                         // 计算模板名
@@ -358,11 +358,19 @@ namespace ALittle
                     var dot_id_name = dot_id.GetCustomTypeDotIdName();
                     if (dot_id_name != null)
                     {
-                        if (class_name == m_namespace_name || class_name == "lua")
+                        if (class_name == "lua")
                             class_name = dot_id_name.GetElementText();
                         else
                             class_name += "." + dot_id_name.GetElementText();
                     }
+                    else
+                    {
+                        class_name = guess_class.namespace_name + "." + class_name;
+                    }
+                }
+                else
+                {
+                    class_name = guess_class.namespace_name + "." + class_name;
                 }
 
                 // 如果有填充模板参数，那么就模板模板
@@ -1145,7 +1153,7 @@ namespace ALittle
                     // 如果是using定义而来，那么就使用using_name
                     if (guess_class.using_name != null) name = guess_class.using_name;
                     string[] split = name.Split('.');
-                    if (split.Length == 2 && (split[0] == m_namespace_name || split[0] == "lua"))
+                    if (split.Length == 2 && split[0] == "lua")
                         content = split[1];
                     else
                         content = name;
@@ -1410,10 +1418,8 @@ namespace ALittle
 
             content = "";
             
-
             // 用来标记第一个变量是不是lua命名域
             bool is_lua_namespace = false;
-            bool is_alittle_namespace = false;
 
             // 获取开头的属性信息
             var first_type = prop_value.GetPropertyValueFirstType();
@@ -1430,14 +1436,29 @@ namespace ALittle
                     || custom_guess is ALittleScriptGuessEnumName)
                     AddRelay((custom_guess as ALittleScriptGuess).GetElement());
 
-                if (custom_guess is ALittleScriptGuessNamespaceName)
-                {
-                    is_lua_namespace = custom_guess.GetValue() == "lua";
-                    is_alittle_namespace = custom_guess.GetValue() == "alittle";
-                }
+                if (custom_guess is ALittleScriptGuessNamespaceName && (custom_guess.GetValue() == "lua" || custom_guess.GetValue() == "alittle"))
+                    is_lua_namespace = true;
 
                 // 如果是lua命名域，那么就忽略
-                if (!is_lua_namespace && !is_alittle_namespace)
+                if (!is_lua_namespace)
+                {
+                    // 如果custom_type不是命名域，那么就自动补上命名域
+                    if (!(custom_guess is ALittleScriptGuessNamespaceName) && custom_guess is ALittleScriptGuess)
+                    {
+                        // 判断custom_type的来源
+                        string pre_namespace_name;
+                        error = ((ALittleScriptPropertyValueCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
+                        if (error != null) return error;
+
+                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name.Length > 0)
+                            content += pre_namespace_name + ".";
+                    }
+
+                    content += custom_type.GetElementText();
+                }
+                // 如果是lua命名域，那么就忽略
+                if (!is_lua_namespace)
                     content += custom_type.GetElementText();
             }
             // 如果是this，那么就变为self
@@ -1540,7 +1561,7 @@ namespace ALittle
                         AddRelay((guess as ALittleScriptGuess).GetElement());
                     }
 
-                    if (!is_lua_namespace && !is_alittle_namespace)
+                    if (!is_lua_namespace)
                         content += split;
 
                     if (dot_id.GetPropertyValueDotIdName() == null)
@@ -1555,7 +1576,6 @@ namespace ALittle
 
                     // 置为false，表示不是命名域
                     is_lua_namespace = false;
-                    is_alittle_namespace = false;
                     continue;
                 }
 
@@ -1653,7 +1673,7 @@ namespace ALittle
                             if (guess is ALittleScriptGuessClass)
                             {
                                 var guess_class = guess as ALittleScriptGuessClass;
-                                if (guess_class.namespace_name == m_namespace_name || guess_class.namespace_name == "lua")
+                                if (guess_class.namespace_name == "lua")
                                     param_list.Add(guess_class.class_name);
                                 else
                                     param_list.Add(guess_class.GetValue());
@@ -2480,7 +2500,7 @@ namespace ALittle
             var name_dec = root.GetEnumNameDec();
             if (name_dec == null) return new ABnfGuessError(null, root.GetElementText() + "没有定义枚举名");
 
-            content += pre_tab + name_dec.GetElementText() + " = {\n";
+            content += pre_tab + m_alittle_gen_namespace_pre + name_dec.GetElementText() + " = {\n";
 
             int enum_value = -1;
             string enum_string;
@@ -2565,7 +2585,7 @@ namespace ALittle
             else
                 content += pre_tab + "assert(" + extends_name + ", \" extends class:" + extends_name + " is nil\")\n";
 
-            content += pre_tab + class_name + " = "
+            content += pre_tab + m_alittle_gen_namespace_pre + class_name + " = "
                 + "Lua.Class(" + extends_name + ", \""
                 + ALittleScriptUtility.GetNamespaceName(root) + "." + class_name + "\")\n\n";
 
@@ -2615,7 +2635,7 @@ namespace ALittle
             // 如果没有ctor，并且有初始化函数
             if (!has_ctor && var_init.Length > 0)
 			{
-                content += pre_tab + "function " + class_name + ":Ctor()\n";
+                content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + ":Ctor()\n";
                 content += var_init;
                 content += pre_tab + "end\n";
                 content += "\n";
@@ -2651,7 +2671,7 @@ namespace ALittle
                         }
                     }
                     ctor_param_list = string.Join(", ", param_name_list);
-                    content += pre_tab + "function " + class_name + ":Ctor(" + ctor_param_list + ")\n";
+                    content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + ":Ctor(" + ctor_param_list + ")\n";
 
                     m_open_rawset = true;
 
@@ -2693,7 +2713,7 @@ namespace ALittle
                     if (class_method_name_dec == null)
                         return new ABnfGuessError(null, "class " + class_name + " getter函数没有函数名");
 
-                    content += pre_tab + "function " + class_name + ".__getter:" + class_method_name_dec.GetElementText() + "()\n";
+                    content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + ".__getter:" + class_method_name_dec.GetElementText() + "()\n";
 
                     var class_method_body_dec = class_getter_dec.GetMethodBodyDec();
                     if (class_method_body_dec == null)
@@ -2730,7 +2750,7 @@ namespace ALittle
                     if (param_name_dec == null)
                         return new ABnfGuessError(null, "class " + class_name + " 函数没有定义函数名");
 
-                    content += pre_tab + "function " + class_name + ".__setter:"
+                    content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + ".__setter:"
                         + class_method_name_dec.GetElementText() + "("
                         + param_name_dec.GetElementText() + ")\n";
 
@@ -2797,7 +2817,7 @@ namespace ALittle
                         }
                     }
                     string method_param_list = string.Join(", ", param_name_list);
-                    content += pre_tab + "function " + class_name + ":"
+                    content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + ":"
                                 + class_method_name_dec.GetElementText()
                                 + "(" + method_param_list + ")\n";
 
@@ -2822,9 +2842,9 @@ namespace ALittle
                     if (coroutine_type == "async")
                     {
                         content += pre_tab
-                            + class_name + "." + class_method_name_dec.GetElementText()
+                            + m_alittle_gen_namespace_pre + class_name + "." + class_method_name_dec.GetElementText()
                             + " = " + "Lua.CoWrap("
-                            + class_name + "." + class_method_name_dec.GetElementText()
+                            + m_alittle_gen_namespace_pre + class_name + "." + class_method_name_dec.GetElementText()
                             + ")\n";
                     }
 
@@ -2875,7 +2895,7 @@ namespace ALittle
                     }
 
                     string method_param_list = string.Join(", ", param_name_list);
-                    content += pre_tab + "function " + class_name + "."
+                    content += pre_tab + "function " + m_alittle_gen_namespace_pre + class_name + "."
                         + class_method_name_dec.GetElementText()
                         + "(" + method_param_list + ")\n";
 
@@ -2901,9 +2921,9 @@ namespace ALittle
                     if (coroutine_type == "async")
                     {
                         content += pre_tab
-                            + class_name + "." + class_method_name_dec.GetElementText()
+                            + m_alittle_gen_namespace_pre + class_name + "." + class_method_name_dec.GetElementText()
                             + " = " + "Lua.CoWrap("
-                            + class_name + "." + class_method_name_dec.GetElementText()
+                            + m_alittle_gen_namespace_pre + class_name + "." + class_method_name_dec.GetElementText()
                             + ")\n";
                     }
                     content += "\n";
@@ -2937,7 +2957,8 @@ namespace ALittle
             }
             else if (access_type == ALittleScriptUtility.ClassAccessType.PROTECTED)
             {
-                content += string.Join(", ", name_list);
+                content += m_alittle_gen_namespace_pre;
+                content += string.Join(", " + m_alittle_gen_namespace_pre, name_list);
             }
             else if (access_type == ALittleScriptUtility.ClassAccessType.PUBLIC)
             {
@@ -3023,7 +3044,7 @@ namespace ALittle
             }
             else
             {
-                content += pre_tab + "function " + method_name + "(" + method_param_list + ")\n";
+                content += pre_tab + "function " + m_alittle_gen_namespace_pre + method_name + "(" + method_param_list + ")\n";
             }
 
             var coroutine_type = ALittleScriptUtility.GetCoroutineType(modifier);
@@ -3048,9 +3069,9 @@ namespace ALittle
             // 协程判定
             if (coroutine_type == "async")
             {
-                content += pre_tab + method_name
+                content += pre_tab + m_alittle_gen_namespace_pre + method_name
                     + " = " + "Lua.CoWrap("
-                    + method_name + ")\n";
+                    + m_alittle_gen_namespace_pre + method_name + ")\n";
             }
 
             content += "\n";
@@ -3092,21 +3113,17 @@ namespace ALittle
                 if (proto_type == "Http")
                 {
                     if (return_list.Count != 1) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，有且仅有一个返回值");
-                    content += pre_tab + m_alittle_gen_namespace_pre + "RegHttpCallback(\"" + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
+                    content += pre_tab + "ALittle.RegHttpCallback(\"" + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
                 }
                 else if (proto_type == "HttpDownload")
                 {
                     if (return_list.Count != 2) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，有且仅有两个返回值");
-                    content += pre_tab + m_alittle_gen_namespace_pre
-                        + "RegHttpDownloadCallback(\""
-                        + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
+                    content += pre_tab + "ALittle.RegHttpDownloadCallback(\"" + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
                 }
                 else if (proto_type == "HttpUpload")
                 {
                     if (return_list.Count != 0) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，不能有返回值");
-                    content += pre_tab + m_alittle_gen_namespace_pre
-                        + "RegHttpFileCallback(\""
-                        + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
+                    content += pre_tab + "ALittle.RegHttpFileCallback(\"" + guess_param_struct.GetValue() + "\", " + method_name + ")\n";
                 }
                 else if (proto_type == "Msg")
                 {
@@ -3116,16 +3133,16 @@ namespace ALittle
                     
                     if (guess_return == null)
                     {
-                        content += pre_tab + m_alittle_gen_namespace_pre
-                            + "RegMsgCallback(" + ALittleScriptUtility.StructHash(guess_param_struct)
+                        content += pre_tab
+                            + "ALittle.RegMsgCallback(" + ALittleScriptUtility.StructHash(guess_param_struct)
                             + ", " + method_name + ")\n";
                     }
                     else
                     {
                         if (!(guess_return is ALittleScriptGuessStruct guess_return_struct)) return new ABnfGuessError(null, "带" + proto_type + "的全局函数，返回值必须是struct");
 
-                        content += pre_tab + m_alittle_gen_namespace_pre
-                            + "RegMsgRpcCallback(" + ALittleScriptUtility.StructHash(guess_param_struct)
+                        content += pre_tab
+                            + "ALittle.RegMsgRpcCallback(" + ALittleScriptUtility.StructHash(guess_param_struct)
                             + ", " + method_name + ", " + ALittleScriptUtility.StructHash(guess_return_struct)
                             + ")\n";
 
@@ -3154,8 +3171,8 @@ namespace ALittle
                     }
                 }
 
-                content += pre_tab + m_alittle_gen_namespace_pre
-                    + "RegCmdCallback(\"" + method_name + "\", " + method_name
+                content += pre_tab
+                    + "ALittle.RegCmdCallback(\"" + method_name + "\", " + method_name
                     + ", {" + string.Join(",", var_list) + "}, {" + string.Join(",", name_list)
                     + "}, \"" + command_text + "\")\n";
             }
@@ -3167,17 +3184,13 @@ namespace ALittle
         protected override ABnfGuessError GenerateRoot(List<ALittleScriptNamespaceElementDecElement> element_dec_list, out string content)
         {
             content = "-- ALittle Generate Lua And Do Not Edit This Line!";
-
-            m_alittle_gen_namespace_pre = "ALittle.";
-            if (m_namespace_name == "ALittle") m_alittle_gen_namespace_pre = "";
-
             m_reflect_map = new Dictionary<string, StructReflectInfo>();
 
-            // 如果是lua命名域，那么就不要使用module;
+            m_alittle_gen_namespace_pre = "";
             if (m_namespace_name == "lua" || m_namespace_name == "alittle")
-                content += "\n";
+                m_alittle_gen_namespace_pre = "_G.";
             else
-                content += "\nmodule(\"" + m_namespace_name + "\", package.seeall)\n\n";
+                m_alittle_gen_namespace_pre = m_namespace_name + ".";
 
             string other_content = "";
             foreach (var child in element_dec_list)
@@ -3244,11 +3257,15 @@ namespace ALittle
                 }
             }
 
+            if (m_namespace_name == "lua" || m_namespace_name == "alittle")
+                content += "do\n";
+            else
+                content += "do\nif _G." + m_namespace_name + " == nil then _G." + m_namespace_name + " = {} end\n";
+
             if (m_rawset_usecount > 0) content += "local ___rawset = rawset\n";
             content += "local ___pairs = pairs\n";
             content += "local ___ipairs = ipairs\n";
-            if (m_need_all_struct)
-                content += "local ___all_struct = " + m_alittle_gen_namespace_pre + "GetAllStruct()\n";
+            if (m_need_all_struct) content += "local ___all_struct = ALittle.GetAllStruct()\n";
             content += "\n";
 
             var info_list = new List<StructReflectInfo>();
@@ -3257,12 +3274,13 @@ namespace ALittle
             foreach (var info in info_list)
             {
                 if (!info.generate) continue;
-                content += m_alittle_gen_namespace_pre
-                    + "RegStruct(" + info.hash_code + ", \"" + info.name + "\", " + info.content + ")\n";
+                content += "ALittle.RegStruct(" + info.hash_code + ", \"" + info.name + "\", " + info.content + ")\n";
             }
             content += "\n";
 
             content += other_content;
+
+            content += "end";
 
             return null;
         }
