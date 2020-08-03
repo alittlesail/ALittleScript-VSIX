@@ -1762,6 +1762,8 @@ namespace ALittle
 
             if (ALittleScriptUtility.CalcAccessType(modifier) == ALittleScriptUtility.ClassAccessType.PRIVATE)
                 content += "local ";
+            else
+                content += m_alittle_gen_namespace_pre;
 
             error = GenerateCustomType(custom_type, out string sub_content);
             if (error != null) return error;
