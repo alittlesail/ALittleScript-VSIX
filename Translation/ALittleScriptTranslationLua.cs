@@ -338,7 +338,7 @@ namespace ALittle
             if (guess is ALittleScriptGuessStruct)
             {
                 content = "{}";
-                return null;   
+                return null;
             }
             // 如果是类
             else if (guess is ALittleScriptGuessClass)
@@ -365,12 +365,28 @@ namespace ALittle
                     }
                     else
                     {
-                        class_name = guess_class.namespace_name + "." + class_name;
+                        // 判断custom_type的来源
+                        string pre_namespace_name;
+                        error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
+                        if (error != null) return error;
+
+                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
+
+                        class_name = pre_namespace_name + class_name;
                     }
                 }
                 else
                 {
-                    class_name = guess_class.namespace_name + "." + class_name;
+                    // 判断custom_type的来源
+                    string pre_namespace_name;
+                    error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
+                    if (error != null) return error;
+
+                    if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                    if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
+
+                    class_name = pre_namespace_name + class_name;
                 }
 
                 // 如果有填充模板参数，那么就模板模板

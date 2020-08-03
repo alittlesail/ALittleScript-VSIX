@@ -511,12 +511,28 @@ namespace ALittle
                     }
                     else
                     {
-                        class_name = guess_class.namespace_name + "." + class_name;
+                        // 判断custom_type的来源
+                        string pre_namespace_name;
+                        error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
+                        if (error != null) return error;
+
+                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
+
+                        class_name = pre_namespace_name + class_name;
                     }
                 }
                 else
                 {
-                    class_name = guess_class.namespace_name + "." + class_name;
+                    // 判断custom_type的来源
+                    string pre_namespace_name;
+                    error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
+                    if (error != null) return error;
+
+                    if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                    if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
+
+                    class_name = pre_namespace_name + class_name;
                 }
 
                 // 如果有填充模板参数，那么就模板模板
@@ -1960,6 +1976,8 @@ namespace ALittle
 
             if (ALittleScriptUtility.CalcAccessType(modifier) == ALittleScriptUtility.ClassAccessType.PRIVATE)
                 content += "let ";
+            else
+                content += m_alittle_gen_namespace_pre;
 
             error = GenerateCustomType(custom_type, out string sub_content);
             if (error != null) return error;

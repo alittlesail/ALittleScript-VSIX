@@ -332,6 +332,80 @@ namespace ALittle
 
             return true;
         }
+
+        public ABnfGuessError CalcNamespaceName(out string namespace_name)
+		{
+            namespace_name = "";
+
+            if (m_key.Length == 0) return new ABnfGuessError(m_element, "找不到指定类型, namespace:" + m_namespace_name + ", key:" + m_key);
+
+            var custom_type_template = m_custom_type.GetCustomTypeTemplate();
+            {
+                var dec_list = ALittleScriptIndex.inst.FindALittleNameDecList(ALittleScriptUtility.ABnfElementType.USING_NAME, m_element.GetFile(), m_namespace_name, m_key, true);
+                foreach (var dec in dec_list)
+                {
+                    if (dec is ALittleScriptUsingNameDecElement)
+                    {
+                        var using_dec = (ALittleScriptUsingDecElement)(dec.GetParent());
+                        if (using_dec == null)
+                            return new ABnfGuessError(m_element, "ALittleScriptUsingNameDecElement的父节点不是ALittleScriptUsingDecElement");
+                        var element_dec = (ALittleScriptNamespaceElementDecElement)(using_dec.GetParent());
+                        if (element_dec == null)
+                            return new ABnfGuessError(m_element, "ALittleScriptUsingDecElement的父节点不是ALittleScriptNamespaceElementDecElement");
+                        var access_type = ALittleScriptUtility.CalcAccessType(element_dec.GetModifierList());
+                        if (access_type != ALittleScriptUtility.ClassAccessType.PRIVATE)
+                            namespace_name = ALittleScriptUtility.GetNamespaceName(dec);
+                        return null;
+                    }
+                }
+            }
+            {
+                // 根据名字获取对应的类
+                var dec_list = ALittleScriptIndex.inst.FindALittleNameDecList(ALittleScriptUtility.ABnfElementType.CLASS_NAME, m_element.GetFile(), m_namespace_name, m_key, true);
+                foreach (var dec in dec_list)
+                {
+                    ABnfGuess class_guess;
+                    var error = dec.GuessType(out class_guess);
+                    if (error != null) return error;
+                    if (!(class_guess is ALittleScriptGuessClass))
+                        return new ABnfGuessError(m_element, "ALittleClassNameDec->GuessType()的结果不是ALittleScriptGuessClass");
+
+                    var class_guess_class = (ALittleScriptGuessClass)class_guess;
+                    namespace_name = class_guess_class.namespace_name;
+                    return null;
+                }
+            }
+            {
+                var dec_list = ALittleScriptIndex.inst.FindALittleNameDecList(ALittleScriptUtility.ABnfElementType.STRUCT_NAME, m_element.GetFile(), m_namespace_name, m_key, true);
+                foreach (var dec in dec_list)
+                {
+                    ABnfGuess struct_guess;
+                    var error = dec.GuessType(out struct_guess);
+                    if (error != null) return error;
+                    if (!(struct_guess is ALittleScriptGuessStruct))
+                        return new ABnfGuessError(m_element, "ALittleStructNameDec->GuessType()的结果不是ALittleScriptGuessStruct");
+                    var struct_guess_struct = (ALittleScriptGuessStruct)struct_guess;
+                    namespace_name = struct_guess_struct.namespace_name;
+                    return null;
+                }
+            }
+            {
+                var dec_list = ALittleScriptIndex.inst.FindALittleNameDecList(ALittleScriptUtility.ABnfElementType.ENUM_NAME, m_element.GetFile(), m_namespace_name, m_key, true);
+                foreach (var dec in dec_list)
+                {
+                    ABnfGuess enum_guess;
+                    var error = dec.GuessType(out enum_guess);
+                    if (error != null) return error;
+                    if (!(enum_guess is ALittleScriptGuessEnum))
+                        return new ABnfGuessError(m_element, "ALittleEnumNameDec->GuessType()的结果不是ALittleScriptGuessEnum");
+                    var enum_guess_enum = (ALittleScriptGuessEnum)enum_guess;
+                    namespace_name = enum_guess_enum.namespace_name;
+                    return null;
+                }
+            }
+
+            return null;
+        }
     }
 }
 
