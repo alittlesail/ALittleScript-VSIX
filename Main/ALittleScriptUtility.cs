@@ -479,6 +479,16 @@ namespace ALittle
             return IsRegister(namespace_dec.GetModifierList());
         }
 
+        // 判断某个是不是register
+        public static bool IsRegister(ABnfFile file)
+        {
+            if (file == null) return false;
+            var namespace_dec = GetNamespaceDec(file);
+            if (namespace_dec == null) return false;
+
+            return IsRegister(namespace_dec.GetModifierList());
+        }
+
         // 获取某个元素的命名域名
         public static string GetNamespaceName(ABnfElement element)
         {

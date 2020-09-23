@@ -516,7 +516,7 @@ namespace ALittle
                         error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
                         if (error != null) return error;
 
-                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name == "alittle" || pre_namespace_name == "javascript") pre_namespace_name = "";
                         if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
 
                         class_name = pre_namespace_name + class_name;
@@ -529,7 +529,7 @@ namespace ALittle
                     error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
                     if (error != null) return error;
 
-                    if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                    if (pre_namespace_name == "alittle" || pre_namespace_name == "javascript") pre_namespace_name = "";
                     if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
 
                     class_name = pre_namespace_name + class_name;
@@ -1620,7 +1620,7 @@ namespace ALittle
                         error = (custom_type.GetReference() as ALittleScriptPropertyValueCustomTypeReference).CalcNamespaceName(out string pre_namespace_name);
                         if (error != null) return error;
 
-                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name == "alittle" || pre_namespace_name == "javascript") pre_namespace_name = "";
                         if (pre_namespace_name != null && pre_namespace_name.Length > 0)
                             content += pre_namespace_name + ".";
                     }

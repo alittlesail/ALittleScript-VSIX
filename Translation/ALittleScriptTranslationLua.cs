@@ -370,7 +370,7 @@ namespace ALittle
                         error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
                         if (error != null) return error;
 
-                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name == "alittle" || pre_namespace_name == "lua") pre_namespace_name = "";
                         if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
 
                         class_name = pre_namespace_name + class_name;
@@ -383,7 +383,7 @@ namespace ALittle
                     error = ((ALittleScriptCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
                     if (error != null) return error;
 
-                    if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                    if (pre_namespace_name == "alittle" || pre_namespace_name == "lua") pre_namespace_name = "";
                     if (pre_namespace_name.Length > 0) pre_namespace_name += ".";
 
                     class_name = pre_namespace_name + class_name;
@@ -1466,16 +1466,13 @@ namespace ALittle
                         error = ((ALittleScriptPropertyValueCustomTypeReference)custom_type.GetReference()).CalcNamespaceName(out pre_namespace_name);
                         if (error != null) return error;
 
-                        if (pre_namespace_name == "alittle") pre_namespace_name = "";
+                        if (pre_namespace_name == "alittle" || pre_namespace_name == "lua") pre_namespace_name = "";
                         if (pre_namespace_name.Length > 0)
                             content += pre_namespace_name + ".";
                     }
 
                     content += custom_type.GetElementText();
                 }
-                // 如果是lua命名域，那么就忽略
-                if (!is_lua_namespace)
-                    content += custom_type.GetElementText();
             }
             // 如果是this，那么就变为self
             else if (this_type != null)
@@ -3201,7 +3198,7 @@ namespace ALittle
         // 生成根节点
         protected override ABnfGuessError GenerateRoot(List<ALittleScriptNamespaceElementDecElement> element_dec_list, out string content)
         {
-            content = "-- ALittle Generate Lua And Do Not Edit This Line!";
+            content = "-- ALittle Generate Lua And Do Not Edit This Line!\n";
             m_reflect_map = new Dictionary<string, StructReflectInfo>();
 
             m_alittle_gen_namespace_pre = "";

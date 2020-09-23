@@ -216,6 +216,10 @@ namespace ALittle
             foreach (FileInfo file in file_list)
             {
                 var full_path = file.DirectoryName + "\\" + file.Name;
+
+                var file_item = project.GetFile(full_path);
+                if (file_item == null || file_item.GetFile() == null || ALittleScriptUtility.IsRegister(file_item.GetFile())) continue;
+
                 var relay_set = new HashSet<string>();
                 FindDefineRelay(project, full_path, relay_set);
                 var relay_info = new RelayInfo();
